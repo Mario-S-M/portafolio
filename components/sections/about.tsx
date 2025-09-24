@@ -1,31 +1,38 @@
-"use client"
+"use client";
 
-import { motion } from "framer-motion"
-import { Calendar, MapPin, GraduationCap, Code2, Lightbulb, BookOpen } from "lucide-react"
-import { Card, CardContent } from "@/components/ui/card"
-import BlurFade from "@/components/ui/blur-fade"
-import { GradientText } from "@/components/ui/gradient-text"
+import { motion } from "framer-motion";
+import {
+  Calendar,
+  MapPin,
+  GraduationCap,
+  Code2,
+  Lightbulb,
+  BookOpen,
+} from "lucide-react";
+import { Card, CardContent } from "@/components/ui/card";
+import BlurFade from "@/components/ui/blur-fade";
+import { GradientText } from "@/components/ui/gradient-text";
 
 const stats = [
   {
     icon: Code2,
     label: "Años con React",
     value: "3+",
-    description: "Experiencia desarrollando"
+    description: "Experiencia desarrollando",
   },
   {
     icon: Lightbulb,
     label: "Proyectos",
     value: "10+",
-    description: "Completados con éxito"
+    description: "Completados con éxito",
   },
   {
     icon: GraduationCap,
     label: "Tecnologías",
     value: "15+",
-    description: "Dominadas"
-  }
-]
+    description: "Dominadas",
+  },
+];
 
 export function AboutSection() {
   return (
@@ -38,7 +45,8 @@ export function AboutSection() {
             </h2>
             <div className="h-1 w-20 bg-gradient-to-r from-primary via-secondary to-accent mx-auto rounded-full shadow-sm"></div>
             <p className="text-muted-foreground max-w-2xl mx-auto mt-4">
-              Conoce mi trayectoria profesional y las experiencias que me han formado como desarrollador
+              Conoce mi trayectoria profesional y las experiencias que me han
+              formado como desarrollador
             </p>
           </div>
         </BlurFade>
@@ -51,36 +59,52 @@ export function AboutSection() {
                 <MapPin className="w-5 h-5 text-primary" />
                 <span>Morelia, Michoacán, México</span>
               </div>
-              
+
               <div className="flex items-center space-x-3 text-muted-foreground">
                 <Calendar className="w-5 h-5 text-primary" />
-                <span>3+ años de experiencia en React</span>
+                <span>Especialista en desarrollo React y tecnologías modernas</span>
               </div>
 
               <div className="flex items-center space-x-3 text-muted-foreground">
                 <GraduationCap className="w-5 h-5 text-primary" />
-                <span>Instituto Tecnológico Nacional de México Campus Morelia (2021-2025)</span>
+                <span>
+                  Instituto Tecnológico Nacional de México Campus Morelia
+                  (2021-2025)
+                </span>
               </div>
 
               <div className="prose prose-lg dark:prose-invert max-w-none">
                 <p className="text-muted-foreground leading-relaxed">
-                  Soy un desarrollador apasionado por crear soluciones tecnológicas que marquen la diferencia. 
-                  Mi especialidad es el desarrollo <span className="font-semibold text-primary">Full Stack</span> 
-                  con un enfoque particular en tecnologías modernas como <span className="font-semibold">React</span> y <span className="font-semibold">Next.js</span>.
-                </p>
-                
-                <p className="text-muted-foreground leading-relaxed">
-                  Durante mis <span className="font-semibold text-primary">3 años con React</span> y 
-                  <span className="font-semibold text-primary"> 1 año</span> explorando tecnologías como 
-                  <span className="font-semibold"> Node.js, GraphQL, Docker y Kubernetes</span>, 
-                  he desarrollado una sólida base técnica que me permite abordar proyectos complejos con confianza.
+                  Soy un desarrollador apasionado por crear soluciones
+                  tecnológicas que transforman la experiencia digital. Mi especialidad reside en el
+                  desarrollo <span className="font-semibold text-primary">Full Stack </span>
+                  con un enfoque meticuloso en tecnologías modernas como{" "}
+                  <span className="font-semibold">React</span> y{" "}
+                  <span className="font-semibold">Next.js</span>.
                 </p>
 
                 <p className="text-muted-foreground leading-relaxed">
-                  Actualmente estoy realizando mis <span className="font-semibold text-primary">residencias profesionales</span> en 
-                  la ENES Morelia (agosto-diciembre 2025), donde desarrollo una 
-                  <span className="font-semibold text-primary"> plataforma educativa para personas con discapacidad visual</span>. 
-                  Esta experiencia me ha enseñado la importancia de crear tecnología <span className="font-semibold">accesible e inclusiva</span>.
+                  Mi trayectoria profesional me ha permitido dominar un amplio espectro de tecnologías,
+                  desde el desarrollo frontend con <span className="font-semibold">React</span> hasta
+                  arquitecturas backend robustas con <span className="font-semibold">Node.js</span> y
+                  <span className="font-semibold">GraphQL</span>. La innovación tecnológica y la
+                  excelencia en el código son mis principios fundamentales.
+                </p>
+
+                <p className="text-muted-foreground leading-relaxed">
+                  Actualmente estoy realizando mis{" "}
+                  <span className="font-semibold text-primary">
+                    residencias profesionales
+                  </span>{" "}
+                  en la ENES Morelia (agosto-diciembre 2025), donde desarrollo
+                  una
+                  <span className="font-semibold text-primary">
+                    {" "}
+                    plataforma educativa para personas con discapacidad visual
+                  </span>
+                  . Esta experiencia me ha enseñado la importancia de crear
+                  tecnología{" "}
+                  <span className="font-semibold">accesible e inclusiva</span>.
                 </p>
               </div>
             </div>
@@ -167,55 +191,74 @@ export function AboutSection() {
         <BlurFade delay={0.8}>
           <Card className="mt-8">
             <CardContent className="p-8">
-              <div className="flex items-center space-x-3 mb-6">
-                <div className="p-2 rounded-lg bg-gradient-to-r from-primary/10 to-secondary/10">
-                  <BookOpen className="w-6 h-6 text-primary" />
+              <div className="flex items-center space-x-3 mb-8">
+                <div className="p-3 rounded-xl bg-gradient-to-r from-primary/10 to-secondary/10">
+                  <BookOpen className="w-7 h-7 text-primary" />
                 </div>
-                <h3 className="text-2xl font-bold">
-                  <GradientText variant="secondary">Cursos y Certificaciones</GradientText>
-                </h3>
+                <div>
+                  <h3 className="text-2xl font-bold">
+                    <GradientText variant="secondary">
+                      Formación Continua
+                    </GradientText>
+                  </h3>
+                  <p className="text-sm text-muted-foreground mt-1">
+                    Más de 25 cursos especializados completados
+                  </p>
+                </div>
               </div>
-              <div className="grid gap-3 text-sm text-muted-foreground">
-                <div className="grid md:grid-cols-2 gap-2">
-                  <span>• Astro: El framework para sitios web orientados al contenido</span>
-                  <span>• n8n+MCP: Automatización y agentes de IA inteligentes</span>
-                  <span>• C#: Empieza tu camino en el lenguaje</span>
-                  <span>• NestJS: Desarrollo backend escalable con Node</span>
-                  <span>• .NET Backend: .NET Core, SQL Server y seguridad JWT</span>
-                  <span>• NestJS + Reportes: Genera PDFs desde Node</span>
-                  <span>• Next.js: El framework de React para producción</span>
-                  <span>• ShadcnUI: Componentes accesibles y personalizables</span>
-                  <span>• Docker: Guía práctica de uso para desarrolladores</span>
-                  <span>• OpenAI: Ejercicios y asistencia con Angular + NestJS</span>
-                  <span>• Nest + GraphQL: Evoluciona tus APIs</span>
-                  <span>• NestJS + Microservicios: Aplicaciones escalables y modulares</span>
-                  <span>• React: Aplicaciones en tiempo real con Socket.io</span>
-                  <span>• Visual Studio Code: Mejora tu velocidad para codificar</span>
-                  <span>• NestJS + Testing: Pruebas unitarias y end to end</span>
-                  <span>• OpenAI: Ejercicios prácticos y asistentes con React + NestJS</span>
-                  <span>• Angular Pro: Lleva tus bases al siguiente nivel</span>
-                  <span>• ReactiveX - RxJS: Desde cero hasta los detalles</span>
-                  <span>• Principios SOLID y Clean Code</span>
-                  <span>• Zustand: Gestor de estado para React</span>
-                  <span>• TanStack Query: Un poderoso gestor de estado asíncrono</span>
-                  <span>• Angular: De cero a experto</span>
-                  <span>• Programación para principiantes - Primeros pasos</span>
-                  <span>• DevOps Total: Docker, Kubernetes, Jenkins, AWS, Git</span>
-                  <span>• React Native Expo: Aplicaciones nativas para iOS y Android</span>
-                  <span>• Docker & Kubernetes: The Practical Guide 2025</span>
-                  <span>• Microfrontends: Arquitectura de aplicaciones web escalables</span>
-                  <span>• React y TypeScript: La guía completa creando +10 proyectos</span>
-                  <span>• Git + GitHub: Todo un sistema de control de versiones desde cero</span>
-                  <span>• Next.js 15 y React: The Complete Guide</span>
-                  <span>• Estimación de proyectos de software</span>
-                  <span>• FullStack Node.js React TS NestJS</span>
-                  <span>• Next.js: Creando proyectos</span>
-                </div>
+
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+                {[
+                  { name: "Astro Framework", category: "Frontend", icon: "🚀" },
+                  { name: "NestJS Backend", category: "Backend", icon: "🛡️" },
+                  { name: "Next.js Avanzado", category: "Full Stack", icon: "⚡" },
+                  { name: "Docker & Kubernetes", category: "DevOps", icon: "🐳" },
+                  { name: "GraphQL APIs", category: "Backend", icon: "🔗" },
+                  { name: "React Native", category: "Mobile", icon: "📱" },
+                  { name: "TypeScript", category: "Lenguajes", icon: "🔷" },
+                  { name: "Microservicios", category: "Arquitectura", icon: "🏗️" },
+                  { name: "Testing Avanzado", category: "Calidad", icon: "🧪" },
+                  { name: "DevOps Completo", category: "Infraestructura", icon: "⚙️" },
+                  { name: "IA & OpenAI", category: "Inteligencia", icon: "🤖" },
+                  { name: "Clean Code", category: "Metodología", icon: "✨" }
+                ].map((cert, index) => (
+                  <motion.div
+                    key={cert.name}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: index * 0.05 }}
+                    viewport={{ once: true }}
+                    whileHover={{ scale: 1.02, y: -2 }}
+                    className="group"
+                  >
+                    <Card className="h-full border-0 bg-gradient-to-br from-card to-card/50 hover:shadow-lg transition-all duration-300">
+                      <CardContent className="p-4">
+                        <div className="flex items-start space-x-3">
+                          <div className="text-2xl">{cert.icon}</div>
+                          <div className="flex-1 min-w-0">
+                            <h4 className="font-semibold text-sm text-foreground group-hover:text-primary transition-colors">
+                              {cert.name}
+                            </h4>
+                            <p className="text-xs text-muted-foreground mt-1">
+                              {cert.category}
+                            </p>
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </motion.div>
+                ))}
+              </div>
+
+              <div className="mt-6 p-4 bg-gradient-to-r from-primary/5 to-secondary/5 rounded-lg border border-primary/10">
+                <p className="text-sm text-muted-foreground text-center">
+                  <span className="font-medium text-primary">+25 cursos especializados</span> en plataformas líderes como Udemy, Platzi y documentación oficial
+                </p>
               </div>
             </CardContent>
           </Card>
         </BlurFade>
       </div>
     </section>
-  )
+  );
 }

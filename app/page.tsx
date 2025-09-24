@@ -1,10 +1,10 @@
-import { Navbar } from "@/components/navbar"
-import { HeroSection } from "@/components/sections/hero"
-import { AboutSection } from "@/components/sections/about"
-import { ExperienceSection } from "@/components/sections/experience"
-import { SkillsSection } from "@/components/sections/skills"
-import { ProjectsSection } from "@/components/sections/projects"
-import { ContactSection } from "@/components/sections/contact"
+import { Navbar } from "@/components/navbar";
+import { HeroSection } from "@/components/sections/hero";
+import { AboutSection } from "@/components/sections/about";
+import { ExperienceSection } from "@/components/sections/experience";
+import { SkillsSection } from "@/components/sections/skills";
+import { ProjectsSection } from "@/components/sections/projects";
+import { ContactSection } from "@/components/sections/contact";
 
 export default function Home() {
   return (
@@ -17,5 +17,5 @@ export default function Home() {
       <ProjectsSection />
       <ContactSection />
     </main>
-  )
+  );
 }

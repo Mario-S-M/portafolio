@@ -1,11 +1,19 @@
-"use client"
+"use client";
 
-import { motion } from "framer-motion"
-import { Mail, Phone, MapPin, Github, Linkedin, MessageSquare, Send } from "lucide-react"
-import { Card, CardContent } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import BlurFade from "@/components/ui/blur-fade"
-import { GradientText } from "@/components/ui/gradient-text"
+import { motion } from "framer-motion";
+import {
+  Mail,
+  Phone,
+  MapPin,
+  Github,
+  Linkedin,
+  MessageSquare,
+  Send,
+} from "lucide-react";
+import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import BlurFade from "@/components/ui/blur-fade";
+import { GradientText } from "@/components/ui/gradient-text";
 
 const contactMethods = [
   {
@@ -14,7 +22,7 @@ const contactMethods = [
     value: "mayitolalito@hotmail.com",
     href: "mailto:mayitolalito@hotmail.com",
     description: "Respondo en menos de 24 horas",
-    color: "from-blue-500 to-cyan-500"
+    color: "from-blue-500 to-cyan-500",
   },
   {
     icon: Phone,
@@ -22,7 +30,7 @@ const contactMethods = [
     value: "44-38-40-91-87",
     href: "tel:44-38-40-91-87",
     description: "Disponible de 9:00 AM a 6:00 PM",
-    color: "from-green-500 to-emerald-500"
+    color: "from-green-500 to-emerald-500",
   },
   {
     icon: MapPin,
@@ -30,7 +38,7 @@ const contactMethods = [
     value: "Morelia, Michoacán, México",
     href: "#",
     description: "Disponible para trabajo remoto",
-    color: "from-purple-500 to-violet-500"
+    color: "from-purple-500 to-violet-500",
   },
   {
     icon: Github,
@@ -38,7 +46,7 @@ const contactMethods = [
     value: "Mario-S-M",
     href: "https://github.com/Mario-S-M",
     description: "Revisa mis proyectos",
-    color: "from-gray-600 to-gray-800"
+    color: "from-gray-600 to-gray-800",
   },
   {
     icon: Linkedin,
@@ -46,23 +54,26 @@ const contactMethods = [
     value: "Mario Eduardo Sánchez Mejía",
     href: "https://www.linkedin.com/in/mario-eduardo-sánchez-mejía-137548184/",
     description: "Conectemos profesionalmente",
-    color: "from-blue-600 to-blue-800"
-  }
-]
+    color: "from-blue-600 to-blue-800",
+  },
+];
 
 const quickMessages = [
   "Hola Mario, me interesa colaborar en un proyecto",
   "¿Tienes disponibilidad para un proyecto freelance?",
   "Me gustaría conocer más sobre tu experiencia",
-  "¿Podrías ayudarme con un proyecto en React?"
-]
+  "¿Podrías ayudarme con un proyecto en React?",
+];
 
 export function ContactSection() {
   const sendWhatsAppMessage = (message: string) => {
-    const phoneNumber = "4438409187" // Sin guiones para WhatsApp
-    const encodedMessage = encodeURIComponent(message)
-    window.open(`https://wa.me/${phoneNumber}?text=${encodedMessage}`, '_blank')
-  }
+    const phoneNumber = "4438409187"; // Sin guiones para WhatsApp
+    const encodedMessage = encodeURIComponent(message);
+    window.open(
+      `https://wa.me/${phoneNumber}?text=${encodedMessage}`,
+      "_blank"
+    );
+  };
 
   return (
     <section id="contact" className="py-20">
@@ -74,8 +85,9 @@ export function ContactSection() {
             </h2>
             <div className="h-1 w-20 bg-gradient-to-r from-primary via-secondary to-accent mx-auto rounded-full shadow-sm mb-6"></div>
             <p className="text-muted-foreground max-w-2xl mx-auto">
-              ¿Tienes un proyecto en mente? ¿Quieres colaborar? ¿O simplemente quieres saludar?
-              Me encantaría escuchar de ti. ¡No dudes en contactarme!
+              ¿Tienes un proyecto en mente? ¿Quieres colaborar? ¿O simplemente
+              quieres saludar? Me encantaría escuchar de ti. ¡No dudes en
+              contactarme!
             </p>
           </div>
         </BlurFade>
@@ -85,9 +97,11 @@ export function ContactSection() {
           <BlurFade delay={0.4}>
             <div className="space-y-6">
               <h3 className="text-2xl font-bold mb-8">
-                <GradientText variant="primary">Formas de Contacto</GradientText>
+                <GradientText variant="primary">
+                  Formas de Contacto
+                </GradientText>
               </h3>
-              
+
               <div className="space-y-4">
                 {contactMethods.map((method, index) => (
                   <motion.div
@@ -99,13 +113,23 @@ export function ContactSection() {
                   >
                     <Card className="hover:shadow-lg transition-all duration-300 group cursor-pointer">
                       <CardContent className="p-6">
-                        <a 
+                        <a
                           href={method.href}
-                          target={method.href.startsWith('http') ? '_blank' : undefined}
-                          rel={method.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+                          target={
+                            method.href.startsWith("http")
+                              ? "_blank"
+                              : undefined
+                          }
+                          rel={
+                            method.href.startsWith("http")
+                              ? "noopener noreferrer"
+                              : undefined
+                          }
                           className="flex items-center space-x-4 w-full"
                         >
-                          <div className={`p-3 rounded-lg bg-gradient-to-r ${method.color} flex-shrink-0`}>
+                          <div
+                            className={`p-3 rounded-lg bg-gradient-to-r ${method.color} flex-shrink-0`}
+                          >
                             <method.icon className="w-6 h-6 text-white" />
                           </div>
                           <div className="flex-1">
@@ -144,11 +168,11 @@ export function ContactSection() {
                     </div>
                     <h4 className="font-semibold">WhatsApp</h4>
                   </div>
-                  
+
                   <p className="text-sm text-muted-foreground mb-4">
                     Envía un mensaje rápido por WhatsApp:
                   </p>
-                  
+
                   <div className="space-y-2">
                     {quickMessages.map((message, index) => (
                       <Button
@@ -175,15 +199,12 @@ export function ContactSection() {
                     </div>
                     <h4 className="font-semibold">Email Directo</h4>
                   </div>
-                  
+
                   <p className="text-sm text-muted-foreground mb-4">
                     ¿Prefieres el email? ¡Perfecto!
                   </p>
-                  
-                  <Button 
-                    asChild
-                    className="w-full"
-                  >
+
+                  <Button asChild className="w-full">
                     <a href="mailto:mayitolalito@hotmail.com?subject=¡Hola Mario!&body=Hola Mario,%0A%0AMe gustaría hablar contigo sobre...">
                       <Mail className="w-4 h-4 mr-2" />
                       Enviar Email
@@ -199,21 +220,22 @@ export function ContactSection() {
                     <GradientText>¿Listo para empezar?</GradientText>
                   </h4>
                   <p className="text-sm text-muted-foreground mb-4">
-                    Estoy disponible para proyectos freelance, colaboraciones y oportunidades full-time.
+                    Estoy disponible para proyectos freelance, colaboraciones y
+                    oportunidades full-time.
                   </p>
                   <div className="flex flex-col sm:flex-row gap-2">
-                    <Button 
-                      onClick={() => sendWhatsAppMessage("¡Hola Mario! Me gustaría hablar sobre una oportunidad laboral.")}
+                    <Button
+                      onClick={() =>
+                        sendWhatsAppMessage(
+                          "¡Hola Mario! Me gustaría hablar sobre una oportunidad laboral."
+                        )
+                      }
                       className="flex-1"
                     >
                       <MessageSquare className="w-4 h-4 mr-2" />
                       WhatsApp
                     </Button>
-                    <Button 
-                      asChild
-                      variant="outline"
-                      className="flex-1"
-                    >
+                    <Button asChild variant="outline" className="flex-1">
                       <a href="mailto:mayitolalito@hotmail.com">
                         <Mail className="w-4 h-4 mr-2" />
                         Email
@@ -234,11 +256,11 @@ export function ContactSection() {
               Desarrollado con ❤️ por Mario Eduardo Sánchez Mejía
             </p>
             <p className="text-sm text-muted-foreground mt-2">
-              © 2024 - Todos los derechos reservados
+              © 2025 - Todos los derechos reservados
             </p>
           </div>
         </BlurFade>
       </div>
     </section>
-  )
+  );
 }

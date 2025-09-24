@@ -1,57 +1,59 @@
-"use client"
+"use client";
 
-import { useState, useEffect } from "react"
-import { motion } from "framer-motion"
-import { Menu, X } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { ThemeToggle } from "@/components/theme-toggle"
-import { cn } from "@/lib/utils"
+import { useState, useEffect } from "react";
+import { motion } from "framer-motion";
+import { Menu, X } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { ThemeToggle } from "@/components/theme-toggle";
+import { LanguageSelector } from "@/components/ui/language-selector";
+import { cn } from "@/lib/utils";
+import { useTranslation } from "react-i18next";
 
 const navItems = [
-  { name: "Inicio", href: "#hero" },
-  { name: "Sobre mí", href: "#about" },
-  { name: "Experiencia", href: "#experience" },
-  { name: "Proyectos", href: "#projects" },
-  { name: "Tecnologías", href: "#skills" },
-  { name: "Contacto", href: "#contact" },
-]
+  { key: "nav.home", href: "#hero" },
+  { key: "nav.about", href: "#about" },
+  { key: "nav.skills", href: "#skills" },
+  { key: "nav.projects", href: "#projects" },
+  { key: "nav.contact", href: "#contact" },
+];
 
 export function Navbar() {
-  const [isOpen, setIsOpen] = useState(false)
-  const [scrolled, setScrolled] = useState(false)
-  const [activeSection, setActiveSection] = useState("hero")
+  const { t } = useTranslation();
+  const [isOpen, setIsOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const [activeSection, setActiveSection] = useState("hero");
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 50)
+      setScrolled(window.scrollY > 50);
 
       // Determinar sección activa
-      const sections = navItems.map(item => item.href.substring(1))
-      const current = sections.find(section => {
-        const element = document.getElementById(section)
+      const sections = navItems.map((item) => item.href.substring(1));
+      const current = sections.find((section) => {
+        const element = document.getElementById(section);
         if (element) {
-          const rect = element.getBoundingClientRect()
-          return rect.top <= 100 && rect.bottom >= 100
+          const rect = element.getBoundingClientRect();
+          return rect.top <= 100 && rect.bottom >= 100;
         }
-        return false
-      })
-      
-      if (current) {
-        setActiveSection(current)
-      }
-    }
+        return false;
+      });
 
-    window.addEventListener("scroll", handleScroll)
-    return () => window.removeEventListener("scroll", handleScroll)
-  }, [])
+      if (current) {
+        setActiveSection(current);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const scrollToSection = (href: string) => {
-    const element = document.querySelector(href)
+    const element = document.querySelector(href);
     if (element) {
-      element.scrollIntoView({ behavior: "smooth" })
-      setIsOpen(false)
+      element.scrollIntoView({ behavior: "smooth" });
+      setIsOpen(false);
     }
-  }
+  };
 
   return (
     <motion.nav
@@ -82,7 +84,7 @@ export function Navbar() {
             <div className="ml-10 flex items-baseline space-x-4">
               {navItems.map((item) => (
                 <motion.button
-                  key={item.name}
+                  key={item.key}
                   onClick={() => scrollToSection(item.href)}
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
@@ -93,19 +95,21 @@ export function Navbar() {
                       : "text-muted-foreground hover:text-primary hover:bg-primary/5"
                   )}
                 >
-                  {item.name}
+                  {t(item.key)}
                 </motion.button>
               ))}
             </div>
           </div>
 
-          {/* Theme Toggle */}
-          <div className="hidden md:flex items-center space-x-4">
+          {/* Theme Toggle & Language Selector */}
+          <div className="hidden md:flex items-center space-x-2">
+            <LanguageSelector />
             <ThemeToggle />
           </div>
 
           {/* Mobile menu button */}
           <div className="md:hidden flex items-center space-x-2">
+            <LanguageSelector />
             <ThemeToggle />
             <Button
               variant="ghost"
@@ -134,7 +138,7 @@ export function Navbar() {
           <div className="px-2 pt-2 pb-3 space-y-1 bg-background/95 backdrop-blur-md rounded-b-lg border-b">
             {navItems.map((item) => (
               <motion.button
-                key={item.name}
+                key={item.key}
                 onClick={() => scrollToSection(item.href)}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
@@ -145,12 +149,12 @@ export function Navbar() {
                     : "text-muted-foreground hover:text-primary hover:bg-primary/5"
                 )}
               >
-                {item.name}
+                {t(item.key)}
               </motion.button>
             ))}
           </div>
         </motion.div>
       </div>
     </motion.nav>
-  )
+  );
 }

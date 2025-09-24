@@ -1,40 +1,38 @@
-"use client"
+"use client";
 
-import React, { useEffect, useState } from "react"
-import { motion } from "framer-motion"
+import React, { useEffect, useState } from "react";
+import { motion } from "framer-motion";
 
 interface ParticleProps {
-  className?: string
-  quantity?: number
-  staticity?: number
-  ease?: number
-  refresh?: boolean
+  className?: string;
+  quantity?: number;
+  ease?: number;
+  refresh?: boolean;
 }
 
 interface Particle {
-  id: number
-  x: number
-  y: number
-  opacity: number
-  size: number
+  id: number;
+  x: number;
+  y: number;
+  opacity: number;
+  size: number;
 }
 
 export function Particles({
   className = "",
   quantity = 50,
-  staticity = 50,
   ease = 50,
   refresh = false,
 }: ParticleProps) {
-  const [particles, setParticles] = useState<Particle[]>([])
-  const [mounted, setMounted] = useState(false)
+  const [particles, setParticles] = useState<Particle[]>([]);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     // Solo ejecutar en el cliente
-    setMounted(true)
-    
+    setMounted(true);
+
     const generateParticles = () => {
-      const particleArray: Particle[] = []
+      const particleArray: Particle[] = [];
       for (let i = 0; i < quantity; i++) {
         particleArray.push({
           id: i,
@@ -42,17 +40,17 @@ export function Particles({
           y: Math.random() * 100,
           opacity: Math.random() * 0.5 + 0.1,
           size: Math.random() * 2 + 0.5,
-        })
+        });
       }
-      return particleArray
-    }
+      return particleArray;
+    };
 
-    setParticles(generateParticles())
-  }, [quantity, refresh])
+    setParticles(generateParticles());
+  }, [quantity, refresh]);
 
   // No renderizar nada hasta que esté montado en el cliente
   if (!mounted) {
-    return null
+    return null;
   }
 
   return (
@@ -71,7 +69,11 @@ export function Particles({
           animate={{
             x: [0, Math.random() * 50 - 25],
             y: [0, Math.random() * 50 - 25],
-            opacity: [particle.opacity, particle.opacity * 0.3, particle.opacity],
+            opacity: [
+              particle.opacity,
+              particle.opacity * 0.3,
+              particle.opacity,
+            ],
           }}
           transition={{
             duration: Math.random() * 10 + 10,
@@ -82,5 +84,5 @@ export function Particles({
         />
       ))}
     </div>
-  )
+  );
 }

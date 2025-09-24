@@ -35,7 +35,13 @@ body {
 }
 
 .scroll-fade {
-  mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    black 5%,
+    black 95%,
+    transparent
+  );
 }
 
 /* Gradientes personalizados más vibrantes */
@@ -78,13 +84,23 @@ body {
 
 /* Animaciones mejoradas */
 @keyframes float {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-10px); }
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
 }
 
 @keyframes pulse-glow {
-  0%, 100% { box-shadow: 0 0 20px rgba(102, 126, 234, 0.3); }
-  50% { box-shadow: 0 0 30px rgba(102, 126, 234, 0.6); }
+  0%,
+  100% {
+    box-shadow: 0 0 20px rgba(102, 126, 234, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 30px rgba(102, 126, 234, 0.6);
+  }
 }
 
 .animate-float {
@@ -92,8 +108,12 @@ body {
 }
 
 @keyframes spin-slow {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .animate-spin-slow {
@@ -102,7 +122,8 @@ body {
 
 /* Efectos de imagen de perfil */
 .profile-image-glow {
-  box-shadow: 0 0 30px rgba(102, 126, 234, 0.4), 0 0 60px rgba(102, 126, 234, 0.2);
+  box-shadow: 0 0 30px rgba(102, 126, 234, 0.4),
+    0 0 60px rgba(102, 126, 234, 0.2);
 }
 
 .profile-image-hover {
@@ -111,7 +132,8 @@ body {
 
 .profile-image-hover:hover {
   transform: scale(1.05) rotate(2deg);
-  box-shadow: 0 0 40px rgba(102, 126, 234, 0.6), 0 0 80px rgba(102, 126, 234, 0.3);
+  box-shadow: 0 0 40px rgba(102, 126, 234, 0.6),
+    0 0 80px rgba(102, 126, 234, 0.3);
 }
 
 /* Efectos de texto mejorados */
@@ -136,13 +158,103 @@ body {
   background-clip: text;
 }
 
+/* Efectos de skill bars elegantes */
+.skill-bar-container {
+  position: relative;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.skill-bar-fill {
+  position: relative;
+  background: linear-gradient(135deg, var(--tw-gradient-from) 0%, var(--tw-gradient-to) 100%);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  transition: all 0.3s ease;
+}
+
+.skill-bar-fill:hover {
+  transform: scaleY(1.1);
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+
+/* Efectos ultra modernos para skills */
+.skill-card-glow {
+  position: relative;
+}
+
+.skill-card-glow::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  border-radius: 16px;
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.skill-card-glow:hover::before {
+  opacity: 1;
+  animation: rotate-glow 2s linear infinite;
+}
+
+@keyframes rotate-glow {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.skill-icon-pulse {
+  animation: icon-pulse 3s ease-in-out infinite;
+}
+
+@keyframes icon-pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+.skill-level-dots {
+  display: flex;
+  gap: 2px;
+}
+
+.skill-level-dots .dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+
+.skill-level-dots .dot.active {
+  background: linear-gradient(135deg, var(--tw-gradient-from), var(--tw-gradient-to));
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.3);
+  transform: scale(1.2);
+}
+
 /* Efectos de fondo elegantes */
 .bg-gradient-elegant {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #f5576c 75%, #4facfe 100%);
+  background: linear-gradient(
+    135deg,
+    #667eea 0%,
+    #764ba2 25%,
+    #f093fb 50%,
+    #f5576c 75%,
+    #4facfe 100%
+  );
 }
 
 .bg-gradient-subtle {
-  background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 25%, rgba(240, 147, 251, 0.1) 50%, rgba(245, 87, 108, 0.1) 75%, rgba(79, 172, 254, 0.1) 100%);
+  background: linear-gradient(
+    135deg,
+    rgba(102, 126, 234, 0.1) 0%,
+    rgba(118, 75, 162, 0.1) 25%,
+    rgba(240, 147, 251, 0.1) 50%,
+    rgba(245, 87, 108, 0.1) 75%,
+    rgba(79, 172, 254, 0.1) 100%
+  );
 }
 
 /* Efectos de sombra mejorados */
@@ -151,17 +263,27 @@ body {
 }
 
 .shadow-glow {
-  box-shadow: 0 0 20px rgba(102, 126, 234, 0.15), 0 0 40px rgba(102, 126, 234, 0.1);
+  box-shadow: 0 0 20px rgba(102, 126, 234, 0.15),
+    0 0 40px rgba(102, 126, 234, 0.1);
 }
 
 /* Animaciones mejoradas */
 @keyframes shimmer {
-  0% { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
 }
 
 .animate-shimmer {
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
   background-size: 200% 100%;
   animation: shimmer 2s infinite;
 }
@@ -170,7 +292,7 @@ body {
 .border-gradient {
   border: 1px solid transparent;
   background: linear-gradient(white, white) padding-box,
-              linear-gradient(135deg, #667eea, #764ba2) border-box;
+    linear-gradient(135deg, #667eea, #764ba2) border-box;
 }
 
 /* Efectos hover mejorados */
@@ -185,11 +307,19 @@ body {
 
 /* Gradientes radiales */
 .bg-radial-primary {
-  background: radial-gradient(circle at center, rgba(102, 126, 234, 0.1) 0%, transparent 70%);
+  background: radial-gradient(
+    circle at center,
+    rgba(102, 126, 234, 0.1) 0%,
+    transparent 70%
+  );
 }
 
 .bg-radial-secondary {
-  background: radial-gradient(circle at center, rgba(240, 147, 251, 0.1) 0%, transparent 70%);
+  background: radial-gradient(
+    circle at center,
+    rgba(240, 147, 251, 0.1) 0%,
+    transparent 70%
+  );
 }
 
 @theme inline {
