@@ -6,8 +6,53 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import BlurFade from "@/components/ui/blur-fade";
 import { GradientText } from "@/components/ui/gradient-text";
+import { useTranslation } from "react-i18next";
 
-const projects = [
+const projectsES = [
+  {
+    title: "Sistema Web Empresarial — Librerías Hidalgo",
+    description:
+      "Sistema full stack empresarial para cadena de librerías, integrando backend Java con frontend Next.js y dos bases de datos relacionales (PostgreSQL + MySQL legacy para inventario).",
+    longDescription:
+      "Arquitectura Spring Boot + Next.js que integra base de datos PostgreSQL con sistema legacy MySQL para gestión de inventario. Implementado con Clean Architecture y arquitectura basada en features, desplegado en contenedores Docker y construido con Maven. Sistema actualmente en producción.",
+    tech: [
+      "Java",
+      "Spring Boot",
+      "Next.js",
+      "PostgreSQL",
+      "MySQL",
+      "Docker",
+      "Maven",
+      "TypeScript",
+    ],
+    demo: "https://libreriashidalgo.mx",
+    image: "/api/placeholder/600/400",
+    category: "Full Stack Empresarial",
+    featured: true,
+    status: "En producción",
+    timeline: "2025 - Presente",
+  },
+  {
+    title: "CRM Empresarial — libmich",
+    description:
+      "Sistema CRM desarrollado con Spring Boot + Angular para gestión de clientes y operaciones, conectado a bases de datos PostgreSQL y MySQL. Arquitectura Clean con despliegue en Docker.",
+    tech: [
+      "Java",
+      "Spring Boot",
+      "Angular",
+      "PostgreSQL",
+      "MySQL",
+      "Docker",
+      "Maven",
+      "TypeScript",
+    ],
+    demo: "https://crm.libmich.com",
+    image: "/api/placeholder/600/400",
+    category: "Full Stack Empresarial",
+    featured: false,
+    status: "En producción",
+    timeline: "2025 - Presente",
+  },
   {
     title: "Plataforma Educativa para Discapacidad Visual",
     description:
@@ -73,19 +118,88 @@ const projects = [
   },
 ];
 
+const projectsEN = [
+  {
+    title: "Enterprise Web System — Librerías Hidalgo",
+    description:
+      "Enterprise full stack system for a bookstore chain, integrating Java backend with Next.js frontend and two relational databases (PostgreSQL + legacy MySQL for inventory).",
+    longDescription:
+      "Spring Boot + Next.js architecture integrating PostgreSQL with legacy MySQL for inventory management. Implemented with Clean Architecture and feature-based architecture, deployed in Docker containers and built with Maven. System currently in production.",
+    tech: ["Java", "Spring Boot", "Next.js", "PostgreSQL", "MySQL", "Docker", "Maven", "TypeScript"],
+    demo: "https://libreriashidalgo.mx",
+    image: "/api/placeholder/600/400",
+    category: "Enterprise Full Stack",
+    featured: true,
+    status: "In production",
+    timeline: "2025 - Present",
+  },
+  {
+    title: "Enterprise CRM — libmich",
+    description:
+      "CRM system developed with Spring Boot + Angular for customer and operations management, connected to PostgreSQL and MySQL databases. Clean architecture with Docker deployment.",
+    tech: ["Java", "Spring Boot", "Angular", "PostgreSQL", "MySQL", "Docker", "Maven", "TypeScript"],
+    demo: "https://crm.libmich.com",
+    image: "/api/placeholder/600/400",
+    category: "Enterprise Full Stack",
+    featured: false,
+    status: "In production",
+    timeline: "2025 - Present",
+  },
+  {
+    title: "Educational Platform for Visual Impairment",
+    description:
+      "Innovative platform developed at ENES Morelia to facilitate language teaching for visually impaired people. Includes advanced accessibility features and adaptive tools.",
+    longDescription:
+      "This project represents my commitment to inclusive technology. The platform features optimized keyboard navigation, screen reader support, audio feedback and an interface fully adapted for visually impaired users.",
+    tech: ["Next.js", "Nest.js", "TypeORM", "PostgreSQL", "GraphQL", "ShadcnUI", "Plate.js", "Markdown", "SSR", "SSG"],
+    github: "https://github.com/Mario-S-M/UNAM-Server/tree/main",
+    demo: "http://132.247.186.91/",
+    image: "/api/placeholder/600/400",
+    category: "Full Stack",
+    featured: false,
+    status: "In production",
+    timeline: "2024",
+  },
+  {
+    title: "GraphQL API with TypeScript",
+    description:
+      "Robust API developed with Nest.js, TypeORM and GraphQL, implementing clean architecture best practices and automatic documentation with OpenAPI.",
+    tech: ["Nest.js", "TypeScript", "GraphQL", "TypeORM", "PostgreSQL", "OpenAPI", "Docker"],
+    github: "https://github.com/Mario-S-M",
+    category: "Backend",
+    featured: false,
+    status: "Completed",
+    timeline: "2024",
+  },
+  {
+    title: "React Dashboard with Analytics",
+    description:
+      "Interactive dashboard built with React and Next.js, featuring real-time data visualization and a robust authentication system.",
+    tech: ["React", "Next.js", "TypeScript", "TailwindCSS", "Chart.js", "Prisma"],
+    github: "https://github.com/Mario-S-M",
+    category: "Frontend",
+    featured: false,
+    status: "In development",
+    timeline: "2024",
+  },
+];
+
 export function ProjectsSection() {
+  const { t, i18n } = useTranslation();
+  const isES = i18n.language === 'es';
+  const projects = isES ? projectsES : projectsEN;
+
   return (
     <section id="projects" className="py-20 bg-muted/30">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <BlurFade delay={0.2}>
           <div className="text-center mb-16">
             <h2 className="text-3xl sm:text-4xl font-bold mb-4">
-              <GradientText variant="accent">Proyectos Destacados</GradientText>
+              <GradientText variant="accent">{t("projects.title")}</GradientText>
             </h2>
             <div className="h-1 w-20 bg-gradient-to-r from-primary via-secondary to-accent mx-auto rounded-full shadow-sm mb-6"></div>
             <p className="text-muted-foreground max-w-2xl mx-auto">
-              Una selección de mis trabajos más significativos, mostrando mi
-              experiencia en desarrollo full stack y tecnologías modernas
+              {t("projects.description")}
             </p>
           </div>
         </BlurFade>
@@ -130,7 +244,7 @@ export function ProjectsSection() {
                               <Eye className="w-8 h-8 text-primary" />
                             </div>
                             <p className="text-primary font-semibold text-sm">
-                              Tecnologías utilizadas
+                              {t("projects.tech.label")}
                             </p>
                           </div>
 
@@ -164,7 +278,7 @@ export function ProjectsSection() {
                         {project.featured && (
                           <div className="absolute top-4 left-4">
                             <span className="px-3 py-1 bg-primary text-primary-foreground text-xs font-semibold rounded-full shadow-lg">
-                              ⭐ Proyecto Destacado
+                              {t("projects.featured.badge")}
                             </span>
                           </div>
                         )}
@@ -233,7 +347,7 @@ export function ProjectsSection() {
                             rel="noopener noreferrer"
                           >
                             <Github className="w-4 h-4 mr-2 group-hover/btn:rotate-12 transition-transform" />
-                            Código
+                            {t("projects.btn.code")}
                           </a>
                         </Button>
 
@@ -269,12 +383,10 @@ export function ProjectsSection() {
             <Card className="max-w-2xl mx-auto">
               <CardContent className="p-8">
                 <h3 className="text-2xl font-bold mb-4">
-                  <GradientText>¿Tienes un proyecto en mente?</GradientText>
+                  <GradientText>{t("projects.cta.title")}</GradientText>
                 </h3>
                 <p className="text-muted-foreground mb-6">
-                  Estoy siempre abierto a nuevas oportunidades y colaboraciones
-                  interesantes. ¡Hablemos sobre cómo puedo ayudarte a hacer
-                  realidad tu proyecto!
+                  {t("projects.cta.desc")}
                 </p>
                 <Button
                   onClick={() => {
@@ -283,7 +395,7 @@ export function ProjectsSection() {
                   }}
                   size="lg"
                 >
-                  Iniciar Conversación
+                  {t("projects.cta.button")}
                 </Button>
               </CardContent>
             </Card>

@@ -187,12 +187,12 @@ export function HeroSection() {
                     className="flex flex-wrap justify-center lg:justify-start gap-2 py-4"
                   >
                     {[
-                      "JavaScript",
-                      "TypeScript",
-                      "React",
+                      "Java",
+                      "Spring Boot",
+                      "SQL",
                       "Next.js",
-                      "Node.js",
-                      "GraphQL",
+                      "Angular",
+                      "Docker",
                     ].map((tech, index) => (
                       <motion.span
                         key={tech}

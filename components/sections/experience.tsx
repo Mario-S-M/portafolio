@@ -5,8 +5,37 @@ import { Calendar, MapPin, Briefcase, GraduationCap } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import BlurFade from "@/components/ui/blur-fade";
 import { GradientText } from "@/components/ui/gradient-text";
+import { useTranslation } from "react-i18next";
 
-const experiences = [
+const experiencesES = [
+  {
+    type: "work",
+    title: "Desarrollador Full Stack",
+    organization: "Librerías Hidalgo — Departamento de Sistemas",
+    location: "Morelia, Michoacán",
+    period: "Octubre 2025 - Presente",
+    description:
+      "Diseño, desarrollo y despliegue de sistemas empresariales en producción para cadena de librerías, integrando backend Java con frontends modernos y bases de datos relacionales.",
+    highlights: [
+      "Desarrollé libreriashidalgo.mx: sistema Full Stack con Spring Boot + Next.js conectado a PostgreSQL y MySQL (inventario legacy)",
+      "Desarrollé crm.libmich.com: CRM empresarial con Spring Boot + Angular",
+      "Definí arquitectura basada en features y Clean Architecture para reducir deuda técnica",
+      "Lideré toma de requerimientos funcionales y no funcionales, estructuré gestión de issues",
+      "Despliegue en contenedores Docker, gestión de dependencias con Maven",
+    ],
+    tech: [
+      "Java",
+      "Spring Boot",
+      "Next.js",
+      "Angular",
+      "PostgreSQL",
+      "MySQL",
+      "Docker",
+      "Maven",
+      "TypeScript",
+    ],
+    color: "from-orange-500 to-amber-600",
+  },
   {
     type: "education",
     title: "Ingeniería en Sistemas Computacionales",
@@ -14,11 +43,12 @@ const experiences = [
     location: "Morelia, Michoacán",
     period: "2021 - 2025",
     description:
-      "Formación integral en desarrollo de software, bases de datos, redes y sistemas distribuidos. Actualmente realizando residencias profesionales en ENES Morelia.",
+      "Formación integral en desarrollo de software, bases de datos, redes y sistemas distribuidos. Promedio: 93.94/100. Residencias profesionales en ENES Morelia (2025).",
     highlights: [
-      "Especialización en tecnologías web modernas",
+      "Promedio certificado: 93.94 / 100",
+      "Especialización en arquitecturas de software y bases de datos relacionales",
       "Proyecto de titulación en desarrollo de software",
-      "Residencias profesionales en ENES Morelia (2025)",
+      "Residencias profesionales en ENES Morelia (Agosto - Diciembre 2025)",
     ],
     color: "from-indigo-500 to-purple-600",
   },
@@ -27,12 +57,12 @@ const experiences = [
     title: "Desarrollador Full Stack - Plataforma Educativa",
     organization: "ENES Morelia - UNAM",
     location: "Morelia, Michoacán",
-    period: "2025",
+    period: "Agosto - Diciembre 2025",
     description:
       "Desarrollo completo de plataforma web para la enseñanza de idiomas a personas con discapacidad visual, implementando tecnologías modernas y principios de accesibilidad.",
     highlights: [
       "Arquitectura Full Stack con Next.js y Nest.js",
-      "Implementación de GraphQL y TypeORM",
+      "Implementación de GraphQL y TypeORM con PostgreSQL",
       "Diseño accesible con ShadcnUI",
       "Integración de herramientas de markdown y edición",
       "Deploy en servidor de producción",
@@ -122,40 +152,182 @@ const experiences = [
     location: "Remoto",
     period: "2023 - Presente",
     description:
-      "Desarrollo continuo de habilidades en tecnologías emergentes y mejores prácticas de desarrollo, con enfoque en la stack moderna de JavaScript/TypeScript y arquitectura de software.",
+      "Desarrollo continuo de habilidades en tecnologías emergentes y mejores prácticas de desarrollo, con enfoque en arquitecturas empresariales Java, DevOps y estándares de TI.",
     highlights: [
-      "Dominio avanzado de React y Next.js",
-      "Especialización en backend con NestJS y GraphQL",
-      "Experiencia con DevOps (Docker, Kubernetes)",
-      "Aprendizaje de múltiples frameworks y herramientas",
-      "Certificaciones en plataformas especializadas",
+      "Especialización en Java empresarial y Spring Boot",
+      "Arquitectura de microservicios y patrones de diseño",
+      "DevOps: Docker, Kubernetes, CI/CD",
+      "Estándares y mejores prácticas en TI",
+      "Certificaciones en plataformas especializadas (Udemy, Platzi)",
     ],
     tech: [
-      "React",
-      "Next.js",
-      "NestJS",
-      "TypeScript",
+      "Java",
+      "Spring Boot",
       "Docker",
       "Kubernetes",
-      "GraphQL",
+      "Microservicios",
+      "TypeScript",
     ],
     color: "from-violet-500 to-purple-500",
   },
 ];
 
+const experiencesEN = [
+  {
+    type: "work",
+    title: "Full Stack Developer",
+    organization: "Librerías Hidalgo — Systems Department",
+    location: "Morelia, Michoacán",
+    period: "October 2025 - Present",
+    description:
+      "Design, development and deployment of enterprise production systems for a bookstore chain, integrating Java backend with modern frontends and relational databases.",
+    highlights: [
+      "Built libreriashidalgo.mx: Full Stack system with Spring Boot + Next.js connected to PostgreSQL and legacy MySQL (inventory)",
+      "Built crm.libmich.com: Enterprise CRM with Spring Boot + Angular",
+      "Defined feature-based architecture and Clean Architecture to reduce technical debt",
+      "Led functional and non-functional requirements gathering, structured issue management",
+      "Docker container deployment, dependency management with Maven",
+    ],
+    tech: ["Java", "Spring Boot", "Next.js", "Angular", "PostgreSQL", "MySQL", "Docker", "Maven", "TypeScript"],
+    color: "from-orange-500 to-amber-600",
+  },
+  {
+    type: "education",
+    title: "Computer Systems Engineering",
+    organization: "Instituto Tecnológico Nacional de México Campus Morelia",
+    location: "Morelia, Michoacán",
+    period: "2021 - 2025",
+    description:
+      "Comprehensive training in software development, databases, networks and distributed systems. GPA: 93.94/100. Professional residency at ENES Morelia (2025).",
+    highlights: [
+      "Certified GPA: 93.94 / 100",
+      "Specialization in software architectures and relational databases",
+      "Graduation project in software development",
+      "Professional residency at ENES Morelia (August - December 2025)",
+    ],
+    color: "from-indigo-500 to-purple-600",
+  },
+  {
+    type: "project",
+    title: "Full Stack Developer - Educational Platform",
+    organization: "ENES Morelia - UNAM",
+    location: "Morelia, Michoacán",
+    period: "August - December 2025",
+    description:
+      "Full development of a web platform for language teaching for visually impaired people, implementing modern technologies and accessibility principles.",
+    highlights: [
+      "Full Stack architecture with Next.js and Nest.js",
+      "GraphQL and TypeORM implementation with PostgreSQL",
+      "Accessible design with ShadcnUI",
+      "Markdown editor tool integration",
+      "Deployment on production server",
+    ],
+    tech: ["Next.js", "Nest.js", "TypeORM", "PostgreSQL", "GraphQL", "TypeScript"],
+    color: "from-emerald-500 to-teal-600",
+  },
+  {
+    type: "work",
+    title: "Frontend Developer - Billing System",
+    organization: "GPS Tracker",
+    location: "Morelia, Michoacán",
+    period: "2022",
+    description:
+      "Development of a billing system connecting frontend with backend via web services, using HTML, CSS and PHP for data integration and visualization.",
+    highlights: [
+      "Responsive user interface with HTML/CSS",
+      "Backend integration via PHP",
+      "REST web service consumption",
+      "Billing data visualization and management",
+    ],
+    tech: ["HTML", "CSS", "PHP", "REST API"],
+    color: "from-rose-500 to-pink-600",
+  },
+  {
+    type: "project",
+    title: "Innovatec Project - AI Educational Platform",
+    organization: "Tecnológico de Morelia - Basic Sciences Department",
+    location: "Morelia, Michoacán",
+    period: "2024",
+    description:
+      "Development of an educational platform using artificial intelligence to support learning for students and teachers in the basic sciences department.",
+    highlights: [
+      "AI integration for personalized teaching",
+      "Intuitive interface for students and teachers",
+      "Support for different academic levels",
+      "Recommendation algorithm implementation",
+    ],
+    tech: ["React", "Node.js", "AI/ML", "TypeScript"],
+    color: "from-violet-500 to-fuchsia-600",
+  },
+  {
+    type: "project",
+    title: "Greenhouse Management System",
+    organization: "Personal IoT Project",
+    location: "Morelia, Michoacán",
+    period: "2023",
+    description:
+      "Implementation of a complete system for greenhouse monitoring and control using Arduino and MQTT protocol for temperature monitoring and automated management.",
+    highlights: [
+      "Arduino and sensor development",
+      "MQTT protocol for IoT communication",
+      "Real-time temperature monitoring",
+      "Automated alert system",
+    ],
+    tech: ["Arduino", "MQTT", "IoT", "C++"],
+    color: "from-cyan-500 to-blue-600",
+  },
+  {
+    type: "work",
+    title: "Sales & Management System - Seven Cell",
+    organization: "Seven Cell - Mobile Devices",
+    location: "Morelia, Michoacán",
+    period: "2023",
+    description:
+      "Development of a complete system for sales, inventory and supplier management for mobile device distribution, including admin modules and reporting.",
+    highlights: [
+      "Inventory management system",
+      "Supplier and purchasing module",
+      "Sales reports and statistics",
+      "Complete admin interface",
+    ],
+    tech: ["PHP", "MySQL", "HTML", "CSS", "JavaScript"],
+    color: "from-blue-500 to-indigo-600",
+  },
+  {
+    type: "learning",
+    title: "Self-taught Learning in Modern Technologies",
+    organization: "Continuous Learning",
+    location: "Remote",
+    period: "2023 - Present",
+    description:
+      "Continuous skill development in emerging technologies and development best practices, focused on enterprise Java architectures, DevOps and IT standards.",
+    highlights: [
+      "Specialization in enterprise Java and Spring Boot",
+      "Microservices architecture and design patterns",
+      "DevOps: Docker, Kubernetes, CI/CD",
+      "IT standards and best practices",
+      "Certifications on specialized platforms (Dev/Talles, Udemy)",
+    ],
+    tech: ["Java", "Spring Boot", "Docker", "Kubernetes", "Microservices", "TypeScript"],
+    color: "from-violet-500 to-purple-500",
+  },
+];
+
 export function ExperienceSection() {
+  const { t, i18n } = useTranslation();
+  const experiences = i18n.language === 'es' ? experiencesES : experiencesEN;
+
   return (
     <section id="experience" className="py-20">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <BlurFade delay={0.2}>
           <div className="text-center mb-16">
             <h2 className="text-3xl sm:text-4xl font-bold mb-4">
-              <GradientText variant="rainbow">Mi Trayectoria</GradientText>
+              <GradientText variant="rainbow">{t("experience.title")}</GradientText>
             </h2>
             <div className="h-1 w-20 bg-gradient-to-r from-primary via-secondary to-accent mx-auto rounded-full shadow-sm mb-6"></div>
             <p className="text-muted-foreground max-w-2xl mx-auto">
-              Un recorrido por mi formación académica, proyectos destacados y
-              crecimiento profesional en el mundo del desarrollo de software
+              {t("experience.subtitle")}
             </p>
           </div>
         </BlurFade>
@@ -214,10 +386,12 @@ export function ExperienceSection() {
                                 }`}
                               >
                                 {experience.type === "education"
-                                  ? "Educación"
+                                  ? t("experience.type.education")
                                   : experience.type === "project"
-                                  ? "Proyecto"
-                                  : "Aprendizaje"}
+                                  ? t("experience.type.project")
+                                  : experience.type === "work"
+                                  ? t("experience.type.work")
+                                  : t("experience.type.learning")}
                               </span>
                             </div>
                           </div>
@@ -249,7 +423,7 @@ export function ExperienceSection() {
                         {/* Highlights */}
                         <div className="mb-4">
                           <h4 className="font-semibold mb-2 text-sm">
-                            Logros destacados:
+                            {t("experience.highlights.label")}
                           </h4>
                           <ul className="space-y-1">
                             {experience.highlights.map((highlight, idx) => (
@@ -289,47 +463,6 @@ export function ExperienceSection() {
           </div>
         </div>
 
-        {/* Future Goals */}
-        <BlurFade delay={0.8}>
-          <div className="mt-16">
-            <Card className="max-w-4xl mx-auto bg-gradient-to-r from-primary/5 to-primary/10 border-primary/20">
-              <CardContent className="p-8 text-center">
-                <h3 className="text-2xl font-bold mb-4">
-                  <GradientText>Próximos Objetivos</GradientText>
-                </h3>
-                <div className="grid md:grid-cols-3 gap-6">
-                  <div className="space-y-2">
-                    <div className="w-12 h-12 mx-auto bg-primary/20 rounded-full flex items-center justify-center">
-                      <Briefcase className="w-6 h-6 text-primary" />
-                    </div>
-                    <h4 className="font-semibold">Experiencia Profesional</h4>
-                    <p className="text-sm text-muted-foreground">
-                      Buscar oportunidades en equipos de desarrollo ágiles
-                    </p>
-                  </div>
-                  <div className="space-y-2">
-                    <div className="w-12 h-12 mx-auto bg-primary/20 rounded-full flex items-center justify-center">
-                      <GraduationCap className="w-6 h-6 text-primary" />
-                    </div>
-                    <h4 className="font-semibold">Especialización</h4>
-                    <p className="text-sm text-muted-foreground">
-                      Profundizar en arquitecturas de microservicios y cloud
-                    </p>
-                  </div>
-                  <div className="space-y-2">
-                    <div className="w-12 h-12 mx-auto bg-primary/20 rounded-full flex items-center justify-center">
-                      <Briefcase className="w-6 h-6 text-primary" />
-                    </div>
-                    <h4 className="font-semibold">Impacto Social</h4>
-                    <p className="text-sm text-muted-foreground">
-                      Continuar desarrollando tecnología accesible e inclusiva
-                    </p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-        </BlurFade>
       </div>
     </section>
   );
