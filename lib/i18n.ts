@@ -176,7 +176,7 @@ const resources = {
       "recognition.items.devtalles.period": "Top 31",
       "recognition.items.devtalles.title": "Top 31 en DevTalles",
       "recognition.items.devtalles.description":
-        "Posición #31 en la plataforma de formación de Fernando Herrera, con 21 certificados completados.",
+        "Posición #31 en la plataforma de formación de Fernando Herrera, con 22 certificados completados.",
 
       // Notas — certificados
       "certificates.eyebrow": "Formación continua",
@@ -400,7 +400,7 @@ const resources = {
       "recognition.items.devtalles.period": "Top 31",
       "recognition.items.devtalles.title": "Top 31 on DevTalles",
       "recognition.items.devtalles.description":
-        "Ranked #31 on Fernando Herrera's training platform, with 21 completed certificates.",
+        "Ranked #31 on Fernando Herrera's training platform, with 22 completed certificates.",
 
       // Notes — certificates
       "certificates.eyebrow": "Continuous learning",

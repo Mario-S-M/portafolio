@@ -125,7 +125,7 @@ Convenciones:
    - la fotografía de perfil → `public/mario.jpg`
    - los certificados de *Ingeniería de prompts* y *Zustand* → `public/certificates/`
 
-   Verificación: `ls public/certificates | wc -l` devuelve 21, y con `npm run dev` responden `/cv-mario-sanchez.pdf` y `/mario.jpg`.
+   Verificación: `ls public/certificates | wc -l` devuelve 22, y con `npm run dev` responden `/cv-mario-sanchez.pdf` y `/mario.jpg`.
 2. Reescribir los tokens de `app/globals.css`: sustituir el bloque OKLCH claro/oscuro por un `:root` único con la paleta del diseño, y añadir los keyframes `riseIn`, `fadeUp`, `marquee`, `floaty`, `spinSlow`, `pulseDot`, `scrollCue`, `shimmer` y `blink`. Verificación: el sitio actual sigue compilando, ahora con fondo `#0A0A0C`.
 3. Cambiar las fuentes en `app/layout.tsx` a Space Grotesk, Manrope y JetBrains Mono, exponiéndolas como `--font-display`, `--font-sans` y `--font-mono`. Retirar `ThemeProvider` del árbol. Verificación: el texto renderiza con Manrope.
 4. Eliminar `components/theme-provider.tsx`, `components/theme-toggle.tsx` y desinstalar `next-themes`. Quitar las referencias en `components/navbar.tsx`. Verificación: `npm run build` pasa sin errores de importación.
@@ -139,9 +139,9 @@ Convenciones:
 12. Reescribir `components/sections/about.tsx` como sección `sobre-mi`: numeral `01`, titular, dos párrafos y tres contadores animados. Los párrafos describen el perfil real: ciclo completo de levantamiento de requerimientos a despliegue, arquitecturas de microservicios, microfrontends y multi-tenant, y accesibilidad como criterio de diseño. Los tres contadores son:
    - `2+` años de experiencia profesional, contados desde diciembre de 2023.
    - `8` proyectos entregados: la plataforma web de Librerías Hidalgo, ESKANI, Bookitech, el punto de venta de zapatería, la plataforma multi-tenant interna, el comercio estacional de coronas, ALICIA ERP y la herramienta de monitoreo de facturación de GPS Tracker. Los cuatro primeros se detallan en la sección `proyectos`.
-   - `21` certificaciones.
+   - `22` certificaciones.
 
-   Se retira de este archivo el bloque de certificados, que pasa al paso 17. Verificación: los tres contadores animan al entrar en pantalla y muestran 2, 8 y 21.
+   Se retira de este archivo el bloque de certificados, que pasa al paso 17. Verificación: los tres contadores animan al entrar en pantalla y muestran 2, 8 y 22.
 13. Reescribir `components/sections/projects.tsx` como sección `proyectos`: **cuatro** tarjetas numeradas `01/04` a `04/04` en retícula 2×2, cada una con categoría, nombre, descripción, píldoras de tecnología, métrica destacada y, si el proyecto tiene sitio público, enlace al dominio y captura real:
 
    - **01 · Plataforma web de Librerías Hidalgo** — `libreriashidalgo.mx` — E-commerce · Full-stack. Tienda en línea y back-office de una cadena de librerías: catálogo e inventario sincronizados desde el ERP por captura de cambios sobre el binlog de MySQL, pagos, envíos con Carta Porte, programa de lealtad de tres niveles e impresión térmica ESC/POS desde el navegador por WebUSB. Despliegue sin caída de servicio con Jenkins, con reemplazo de contenedores uno a uno y rollback inmediato. Tecnologías: `Next.js 16` `React 19` `NestJS 11` `GraphQL` `PostgreSQL 17` `TypeORM` `Socket.IO` `Docker` `Jenkins`. Métrica: **71** pantallas en producción.
@@ -171,10 +171,10 @@ Convenciones:
    - **Ene 2026** · Presentación de ESKANI en el IFE Conference, Tecnológico de Monterrey campus Monterrey.
    - **Ene 2026** · Alianza con ElevenLabs. Acceso aprobado a su API de síntesis de voz mediante su programa de apoyo a la educación especial, tras presentar el proyecto ante su CEO. Se redacta como alianza en implementación, no como integración terminada.
    - **May 2025** · Presentación de ESKANI en el congreso ENITET, Universidad Michoacana de San Nicolás de Hidalgo.
-   - **Top 31** · Plataforma DevTalles de Fernando Herrera. La tarjeta de perfil de la plataforma muestra `#31` y 21 certificados, cifra que coincide con el catálogo de la sección `notas`.
+   - **Top 31** · Plataforma DevTalles de Fernando Herrera. La tarjeta de perfil de la plataforma mostraba `#31` y 21 certificados cuando se tomó el dato; el catálogo de la sección `notas` va por 22 tras añadirse el curso de Claude Code.
 
    Más las cintas `SHIP IT / MEASURE IT / FIX IT / REPEAT` y `commit · review · test · deploy · observe · iterate`. Verificación: se muestran las cuatro entradas y las dos cintas se desplazan en direcciones opuestas.
-17. Crear `components/sections/certificates.tsx` como sección `notas`: se reutiliza el layout de tarjetas de notas para los 21 certificados de `public/certificates/`. El catálogo se migra desde `about.tsx` y se le añaden las dos entradas nuevas: "Ingeniería de prompts: para la vida real" (categoría IA) y "Zustand: gestor de estado para React" (categoría Frontend). Cada tarjeta enlaza a su PDF y abre en pestaña nueva. Verificación: se listan 21 tarjetas y los 21 enlaces abren su PDF correspondiente.
+17. Crear `components/sections/certificates.tsx` como sección `notas`: se reutiliza el layout de tarjetas de notas para los 22 certificados de `public/certificates/`. El catálogo se migra desde `about.tsx` y se le añaden las dos entradas nuevas: "Ingeniería de prompts: para la vida real" (categoría IA) y "Zustand: gestor de estado para React" (categoría Frontend). Cada tarjeta enlaza a su PDF y abre en pestaña nueva. Verificación: se listan 22 tarjetas y los 22 enlaces abren su PDF correspondiente.
 18. Reescribir `components/sections/contact.tsx` como sección `contacto`: titular, párrafo y los datos de contacto reales — correo `mariosnachezmarla@gmail.com` como principal y destinatario del formulario, correo `mayitolalito@hotmail.com` como alterno, teléfono `+52 443 840 9187`, `linkedin.com/in/mario-sánchez-46b341210` y `github.com/Mario-S-M`. Más el formulario de tres campos que compone un `mailto:` hacia el correo principal, y el pie con copyright, "Descargar CV", "Volver arriba", enlaces de sección y el porcentaje de scroll. Verificación: enviar el formulario abre el cliente de correo con destinatario, asunto y cuerpo prellenados.
 19. Actualizar `app/page.tsx` con el orden nuevo de nueve componentes. Verificación: el scroll recorre las ocho secciones en el orden del diseño.
 20. Añadir a `lib/i18n.ts` todas las claves nuevas en `es` y `en`, y retirar las que quedaron huérfanas. Tres claves actuales afirman cifras que ya no son ciertas y deben desaparecer o corregirse: `about.training.subtitle` ("Más de 25 cursos"), `about.training.footer` ("19 certificados verificables") y `about.recognition.title` ("Top 47"). El copy es casi todo nuevo, así que la versión inglesa se redacta al escribirlo; los atributos `data-en` del diseño solo aportan las pocas cadenas del diseño que se conservan. Es el paso más largo del plan. Verificación: cambiar a EN traduce las ocho secciones y no queda ninguna clave sin su par en el otro idioma.
@@ -198,14 +198,14 @@ Convenciones:
 - [ ] Cada tarjeta abre un visor a pantalla completa con sus capturas, navegable con `←`, `→` y `Esc`, y con pie descriptivo traducido.
 - [ ] El visor se dibuja por encima de la barra de navegación y de los puntos laterales.
 - [ ] La palabra "Atlas" no aparece en ninguna parte del sitio, ni como tarjeta ni en la trayectoria.
-- [ ] Los contadores de "Sobre mí" muestran 2, 8 y 21, no 4 / 23 / 99.9.
+- [ ] Los contadores de "Sobre mí" muestran 2, 8 y 22, no 4 / 23 / 99.9.
 - [ ] El portafolio no se presenta como desarrollador Java ni Spring Boot en ninguna sección.
 - [ ] La sección `experiencia` muestra seis hitos e incluye Librerías Hidalgo, la residencia en ENES Morelia (UNAM), GPS Tracker, la titulación en TecNM Morelia y la maestría en UTEL.
 - [ ] La sección `stack` muestra cinco columnas, una de ellas dedicada a IA aplicada.
 - [ ] La sección `reconocimientos` incluye el IFE Conference, el congreso ENITET, la alianza con ElevenLabs y el Top 31 de DevTalles.
 - [ ] El portafolio no menciona en ningún punto el "Top 47"; la cifra publicada es 31.
 - [ ] La alianza con ElevenLabs se describe como aprobada y en implementación, no como integración terminada.
-- [ ] `public/certificates/` contiene 21 PDFs y la sección `notas` lista los 21, cada uno enlazando a su archivo.
+- [ ] `public/certificates/` contiene 22 PDFs y la sección `notas` lista los 22, cada uno enlazando a su archivo.
 - [ ] Los dos botones "Descargar CV" (hero y pie) descargan `public/cv-mario-sanchez.pdf`, que es la versión ATS v2.
 - [ ] La sección `contacto` publica los dos correos, el teléfono, LinkedIn y GitHub.
 - [ ] Ningún archivo del repositorio contiene material personal ajeno al portafolio.
@@ -227,10 +227,10 @@ Convenciones:
 - **Sí:** inlinear el contenido en el repositorio en lugar de referenciar la carpeta externa. La carpeta contiene material personal; nada debe tener motivo para volver a leerla después del paso 1.
 - **Sí:** publicar los dos correos y el teléfono, a petición explícita del usuario tras advertirle que un número en un sitio público queda expuesto a rastreadores.
 - **Sí:** quinta columna de stack dedicada a IA aplicada, fuera de las cuatro del diseño. RAG, agentes, embeddings y MCP son el diferenciador más claro del perfil y diluirlos dentro de "Backend" los perdería.
-- **Sí:** publicar "Top 31 · DevTalles". El portafolio actual decía Top 47 y el perfil profesional no recoge el dato; el usuario aportó la tarjeta de la plataforma, que muestra `#31` y 21 certificados. Se corrige la cifra y se toma la tarjeta como respaldo.
+- **Sí:** publicar "Top 31 · DevTalles". El portafolio actual decía Top 47 y el perfil profesional no recoge el dato; el usuario aportó la tarjeta de la plataforma, que mostraba `#31`. Se corrige la cifra y se toma la tarjeta como respaldo. El número de certificados sube con cada curso nuevo, así que vive en un solo sitio del catálogo.
 - **Sí:** CV ATS v2 en lugar del CV de LaTeX del repositorio. El del repositorio está adaptado a una postulación concreta a Banxico; el ATS v2 es general y más reciente.
 - **No:** publicar el liderazgo scout, los idiomas ni el detalle de la formación. El diseño no tiene contenedor para ellos y forzarlos rompería la retícula.
-- **Sí:** reutilizar el contenedor de `notas` para los certificados. El layout de tarjetas encaja y ya existen 21 PDF reales que hoy están enterrados dentro de "Sobre mí".
+- **Sí:** reutilizar el contenedor de `notas` para los certificados. El layout de tarjetas encaja y ya existen 22 PDF reales que hoy están enterrados dentro de "Sobre mí".
 - **No:** una sección de blog con entradas de marcador. No hay entradas escritas y los marcadores envejecen mal.
 - **Sí:** conservar los dos sistemas de animación actuales, Framer Motion vía `BlurFade` y Anime.js vía `useScrollReveal` y `useAnimeHover`, reaplicados sobre el markup nuevo. No se tocan `hooks/use-scroll-reveal.ts` ni `hooks/use-anime.ts`, solo dónde se invocan.
 - **No:** portar el JavaScript de layout del diseño (`data-hero-grid`, `data-two-col`, `data-tl-row`, `data-nav-links`, `data-panel-card`). Mide anchos en tiempo de ejecución porque el lienzo de Claude Design no admite media queries. En Next.js se resuelve con clases responsive de Tailwind, que no provocan parpadeo en la primera pintura.

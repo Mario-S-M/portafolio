@@ -21,7 +21,7 @@ const stats = [
   { id: "projects", value: 8, suffix: "", labelKey: "about.stats.projects", accent: false },
   {
     id: "certificates",
-    value: 21,
+    value: 22,
     suffix: "",
     labelKey: "about.stats.certificates",
     accent: true,

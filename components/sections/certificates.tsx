@@ -10,15 +10,15 @@ import { useScrollReveal } from "@/hooks/use-scroll-reveal";
 
 /**
  * Certificados. Reutiliza el contenedor `notas` del diseño —el numeral 03— para
- * los 21 PDF de `public/certificates/`.
+ * los 22 PDF de `public/certificates/`.
  *
  * Se agrupan por familia porque eso es lo que el contenido es: cuatro bloques de
- * formación, no una secuencia. Numerarlos 01…21 habría sido decoración.
+ * formación, no una secuencia. Numerarlos 01…22 habría sido decoración.
  *
  * Cada fila lleva el icono de su tecnología servido por Simple Icons en gris de
  * la paleta, más emisor, fecha y duración cuando el certificado la acredita.
  * Esos datos son verificables y dejan ver de un vistazo que diecinueve de los
- * veintiuno son de 2026. Sustituyen a los emojis de la versión anterior, que
+ * veintidós son de 2026. Sustituyen a los emojis de la versión anterior, que
  * traían cada uno su propia paleta.
  *
  * Los nombres de curso, emisor y duración son nombres propios: viven en este
@@ -82,6 +82,7 @@ const GROUPS: Group[] = [
     items: [
       { name: "n8n + MCP: automatización y agentes de IA", issuer: "DevTalles", date: "Feb 2026", file: "n8n MCP Automatizacion y agentes de IA inteligentes.pdf", icon: "n8n" },
       { name: "Python + n8n: automatiza rutinas cotidianas", issuer: "DevTalles", date: "Mar 2026", file: "Python n8n Automatiza reutinas cotidianas.pdf", icon: "python" },
+      { name: "Claude Code: guía completa para desarrolladores de software", issuer: "DevTalles", date: "Sep 2026", file: "Claude Code.pdf", icon: "claude" },
       { name: "Ingeniería de prompts para la vida real", issuer: "DevTalles", date: "Jul 2026", file: "Ingenieria de prompts para la vida real.pdf" },
       { name: "Vibe coding de forma responsable", issuer: "DevTalles", date: "Mar 2026", file: "Vibe coding de forma responsable.pdf" },
     ],
