@@ -1,12 +1,12 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-// @ts-ignore
 import anime from "animejs/lib/anime.es.js";
+import type { AnimeParams } from "animejs";
 
 interface UseScrollAnimationOptions {
   targets: string | HTMLElement | NodeListOf<Element>;
-  animation: any;
+  animation: Omit<AnimeParams, "targets">;
   triggerOffset?: number;
   once?: boolean;
 }

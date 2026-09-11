@@ -1,407 +1,354 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { ExternalLink, Github, Eye } from "lucide-react";
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import BlurFade from "@/components/ui/blur-fade";
-import { GradientText } from "@/components/ui/gradient-text";
+import { useState } from "react";
+import Image from "next/image";
 import { useTranslation } from "react-i18next";
+import BlurFade from "@/components/ui/blur-fade";
+import { useTilt } from "@/hooks/use-tilt";
+import Lightbox from "@/components/ui/lightbox";
 
-const projectsES = [
+/**
+ * Sección `proyectos` — cuatro tarjetas numeradas 01/04 … 04/04 y el bloque
+ * "Manifiesto" de cierre.
+ *
+ * Los proyectos con sitio público muestran una captura real y enlazan al dominio;
+ * los que no lo tienen caen al marcador con gradiente e iniciales.
+ *
+ * Un solo sistema de animación por nodo: `BlurFade` (Framer Motion) anima el
+ * contenedor de cada tarjeta; `useTilt` transforma el artículo interior y publica
+ * `--tilt-x` / `--tilt-y` / `--tilt-active` para el brillo que sigue al puntero.
+ * Ambos hooks se inhiben en táctil y bajo `prefers-reduced-motion`.
+ */
+
+type Project = {
+  id: string;
+  /** Nombre propio: no se traduce. */
+  name: string;
+  /** Iniciales del marcador que se usa cuando no hay captura. */
+  initials: string;
+  categoryKey: string;
+  summaryKey: string;
+  /** Nombres propios de tecnología: no se traducen. */
+  tech: string[];
+  metric: { value: string; labelKey: string };
+  /** Sitio público del proyecto. Ausente si no lo tiene. */
+  url?: string;
+  /** Dominio mostrado en el enlace. */
+  host?: string;
+  /** Capturas en `public/projects/<id>/`. La primera es la portada de la tarjeta. */
+  shots?: { src: string; captionKey: string }[];
+};
+
+const projects: Project[] = [
   {
-    title: "Sistema Web Empresarial — Librerías Hidalgo",
-    description:
-      "Sistema full stack empresarial para cadena de librerías, integrando backend Java con frontend Next.js y dos bases de datos relacionales (PostgreSQL + MySQL legacy para inventario).",
-    longDescription:
-      "Arquitectura Spring Boot + Next.js que integra base de datos PostgreSQL con sistema legacy MySQL para gestión de inventario. Implementado con Clean Architecture y arquitectura basada en features, desplegado en contenedores Docker y construido con Maven. Sistema actualmente en producción.",
-    tech: [
-      "Java",
-      "Spring Boot",
-      "Next.js",
-      "PostgreSQL",
-      "MySQL",
-      "Docker",
-      "Maven",
-      "TypeScript",
+    id: "hidalgo",
+    name: "Librerías Hidalgo",
+    initials: "LH",
+    url: "https://libreriashidalgo.mx",
+    host: "libreriashidalgo.mx",
+    shots: [
+      { src: "/projects/hidalgo/01-portada.jpg", captionKey: "projects.hidalgo.shot1" },
+      { src: "/projects/hidalgo/02-catalogo.jpg", captionKey: "projects.hidalgo.shot2" },
+      { src: "/projects/hidalgo/03-secciones.jpg", captionKey: "projects.hidalgo.shot3" },
     ],
-    demo: "https://libreriashidalgo.mx",
-    image: "/api/placeholder/600/400",
-    category: "Full Stack Empresarial",
-    featured: true,
-    status: "En producción",
-    timeline: "2025 - Presente",
-  },
-  {
-    title: "CRM Empresarial — libmich",
-    description:
-      "Sistema CRM desarrollado con Spring Boot + Angular para gestión de clientes y operaciones, conectado a bases de datos PostgreSQL y MySQL. Arquitectura Clean con despliegue en Docker.",
+    categoryKey: "projects.hidalgo.category",
+    summaryKey: "projects.hidalgo.summary",
     tech: [
-      "Java",
-      "Spring Boot",
-      "Angular",
-      "PostgreSQL",
-      "MySQL",
-      "Docker",
-      "Maven",
-      "TypeScript",
-    ],
-    demo: "https://crm.libmich.com",
-    image: "/api/placeholder/600/400",
-    category: "Full Stack Empresarial",
-    featured: false,
-    status: "En producción",
-    timeline: "2025 - Presente",
-  },
-  {
-    title: "Plataforma Educativa para Discapacidad Visual",
-    description:
-      "Plataforma innovadora desarrollada en la ENES Morelia para facilitar el proceso de enseñanza-aprendizaje de idiomas para personas con discapacidad visual. Incluye características de accesibilidad avanzadas y herramientas adaptativas.",
-    longDescription:
-      "Este proyecto representa mi compromiso con la tecnología inclusiva. La plataforma cuenta con navegación por teclado optimizada, soporte para lectores de pantalla, feedback auditivo y una interfaz completamente adaptada para usuarios con discapacidad visual.",
-    tech: [
-      "Next.js",
-      "Nest.js",
-      "TypeORM",
-      "PostgreSQL",
+      "Next.js 16",
+      "React 19",
+      "NestJS 11",
       "GraphQL",
-      "ShadcnUI",
-      "Plate.js",
-      "Markdown",
-      "SSR",
-      "SSG",
-    ],
-    github: "https://github.com/Mario-S-M/UNAM-Server/tree/main",
-    demo: "http://132.247.186.91/",
-    image: "/api/placeholder/600/400",
-    category: "Full Stack",
-    featured: true,
-    status: "En producción",
-    timeline: "2024",
-  },
-  {
-    title: "API GraphQL con TypeScript",
-    description:
-      "API robusta desarrollada con Nest.js, TypeORM y GraphQL, implementando mejores prácticas de arquitectura limpia y documentación automática con OpenAPI.",
-    tech: [
-      "Nest.js",
-      "TypeScript",
-      "GraphQL",
+      "PostgreSQL 17",
       "TypeORM",
-      "PostgreSQL",
-      "OpenAPI",
+      "Socket.IO",
       "Docker",
+      "Jenkins",
     ],
-    github: "https://github.com/Mario-S-M",
-    category: "Backend",
-    featured: false,
-    status: "Completado",
-    timeline: "2024",
+    metric: { value: "71", labelKey: "projects.hidalgo.metric" },
   },
   {
-    title: "Dashboard React con Analytics",
-    description:
-      "Dashboard interactivo construido con React y Next.js, featuring real-time data visualization y un sistema de autenticación robusto.",
+    id: "eskani",
+    name: "ESKANI",
+    initials: "ES",
+    url: "https://eskani.enesmorelia.unam.mx",
+    host: "eskani.enesmorelia.unam.mx",
+    shots: [{ src: "/projects/eskani/01-portada.jpg", captionKey: "projects.eskani.shot1" }],
+    categoryKey: "projects.eskani.category",
+    summaryKey: "projects.eskani.summary",
+    tech: ["Next.js", "NestJS", "Fastify", "PostgreSQL", "Docker", "Nginx", "WCAG", "ARIA"],
+    metric: { value: "2", labelKey: "projects.eskani.metric" },
+  },
+  {
+    id: "bookitech",
+    name: "Bookitech",
+    initials: "BK",
+    url: "https://bookitech.mx",
+    host: "bookitech.mx",
+    shots: [{ src: "/projects/bookitech/01-portada.jpg", captionKey: "projects.bookitech.shot1" }],
+    categoryKey: "projects.bookitech.category",
+    summaryKey: "projects.bookitech.summary",
     tech: [
-      "React",
-      "Next.js",
-      "TypeScript",
-      "TailwindCSS",
-      "Chart.js",
-      "Prisma",
+      "n8n",
+      "Twilio",
+      "RAG",
+      "bge-m3",
+      "Groq",
+      "Ollama",
+      "Python",
+      "WhatsApp Business API",
     ],
-    github: "https://github.com/Mario-S-M",
-    category: "Frontend",
-    featured: false,
-    status: "En desarrollo",
-    timeline: "2024",
+    metric: { value: "8", labelKey: "projects.bookitech.metric" },
+  },
+  {
+    id: "pos",
+    name: "Punto de venta",
+    initials: "PV",
+    shots: [
+      { src: "/projects/pos/01-catalogo.jpg", captionKey: "projects.pos.shot1" },
+      { src: "/projects/pos/02-ventas.jpg", captionKey: "projects.pos.shot2" },
+      { src: "/projects/pos/03-cierre-caja.jpg", captionKey: "projects.pos.shot3" },
+      { src: "/projects/pos/04-inversionistas.jpg", captionKey: "projects.pos.shot4" },
+      { src: "/projects/pos/05-categorias.jpg", captionKey: "projects.pos.shot5" },
+    ],
+    categoryKey: "projects.pos.category",
+    summaryKey: "projects.pos.summary",
+    tech: ["Flutter", "Dart", "NestJS", "PostgreSQL", "Swagger"],
+    metric: { value: "1", labelKey: "projects.pos.metric" },
   },
 ];
 
-const projectsEN = [
+/** Las tres ideas de la filosofía de desarrollo, en la voz del diseño. */
+const manifesto = [
+  { id: "code", titleKey: "projects.manifesto.code.title", descKey: "projects.manifesto.code.desc" },
   {
-    title: "Enterprise Web System — Librerías Hidalgo",
-    description:
-      "Enterprise full stack system for a bookstore chain, integrating Java backend with Next.js frontend and two relational databases (PostgreSQL + legacy MySQL for inventory).",
-    longDescription:
-      "Spring Boot + Next.js architecture integrating PostgreSQL with legacy MySQL for inventory management. Implemented with Clean Architecture and feature-based architecture, deployed in Docker containers and built with Maven. System currently in production.",
-    tech: ["Java", "Spring Boot", "Next.js", "PostgreSQL", "MySQL", "Docker", "Maven", "TypeScript"],
-    demo: "https://libreriashidalgo.mx",
-    image: "/api/placeholder/600/400",
-    category: "Enterprise Full Stack",
-    featured: true,
-    status: "In production",
-    timeline: "2025 - Present",
+    id: "innovation",
+    titleKey: "projects.manifesto.innovation.title",
+    descKey: "projects.manifesto.innovation.desc",
   },
   {
-    title: "Enterprise CRM — libmich",
-    description:
-      "CRM system developed with Spring Boot + Angular for customer and operations management, connected to PostgreSQL and MySQL databases. Clean architecture with Docker deployment.",
-    tech: ["Java", "Spring Boot", "Angular", "PostgreSQL", "MySQL", "Docker", "Maven", "TypeScript"],
-    demo: "https://crm.libmich.com",
-    image: "/api/placeholder/600/400",
-    category: "Enterprise Full Stack",
-    featured: false,
-    status: "In production",
-    timeline: "2025 - Present",
-  },
-  {
-    title: "Educational Platform for Visual Impairment",
-    description:
-      "Innovative platform developed at ENES Morelia to facilitate language teaching for visually impaired people. Includes advanced accessibility features and adaptive tools.",
-    longDescription:
-      "This project represents my commitment to inclusive technology. The platform features optimized keyboard navigation, screen reader support, audio feedback and an interface fully adapted for visually impaired users.",
-    tech: ["Next.js", "Nest.js", "TypeORM", "PostgreSQL", "GraphQL", "ShadcnUI", "Plate.js", "Markdown", "SSR", "SSG"],
-    github: "https://github.com/Mario-S-M/UNAM-Server/tree/main",
-    demo: "http://132.247.186.91/",
-    image: "/api/placeholder/600/400",
-    category: "Full Stack",
-    featured: false,
-    status: "In production",
-    timeline: "2024",
-  },
-  {
-    title: "GraphQL API with TypeScript",
-    description:
-      "Robust API developed with Nest.js, TypeORM and GraphQL, implementing clean architecture best practices and automatic documentation with OpenAPI.",
-    tech: ["Nest.js", "TypeScript", "GraphQL", "TypeORM", "PostgreSQL", "OpenAPI", "Docker"],
-    github: "https://github.com/Mario-S-M",
-    category: "Backend",
-    featured: false,
-    status: "Completed",
-    timeline: "2024",
-  },
-  {
-    title: "React Dashboard with Analytics",
-    description:
-      "Interactive dashboard built with React and Next.js, featuring real-time data visualization and a robust authentication system.",
-    tech: ["React", "Next.js", "TypeScript", "TailwindCSS", "Chart.js", "Prisma"],
-    github: "https://github.com/Mario-S-M",
-    category: "Frontend",
-    featured: false,
-    status: "In development",
-    timeline: "2024",
+    id: "learning",
+    titleKey: "projects.manifesto.learning.title",
+    descKey: "projects.manifesto.learning.desc",
   },
 ];
 
-export function ProjectsSection() {
-  const { t, i18n } = useTranslation();
-  const isES = i18n.language === 'es';
-  const projects = isES ? projectsES : projectsEN;
+const total = String(projects.length).padStart(2, "0");
+
+function ProjectCard({ project, index }: { project: Project; index: number }) {
+  const { t } = useTranslation();
+  const cardRef = useTilt<HTMLElement>({ maxTilt: 6, lift: 10 });
+  const [openAt, setOpenAt] = useState<number | null>(null);
+  const shots = project.shots ?? [];
 
   return (
-    <section id="projects" className="py-20 bg-muted/30">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <BlurFade delay={0.2}>
-          <div className="text-center mb-16">
-            <h2 className="text-3xl sm:text-4xl font-bold mb-4">
-              <GradientText variant="accent">{t("projects.title")}</GradientText>
-            </h2>
-            <div className="h-1 w-20 bg-gradient-to-r from-primary via-secondary to-accent mx-auto rounded-full shadow-sm mb-6"></div>
-            <p className="text-muted-foreground max-w-2xl mx-auto">
-              {t("projects.description")}
-            </p>
+    <article
+      ref={cardRef}
+      className="group/card relative flex h-full flex-col gap-5 overflow-hidden border border-hairline bg-bg p-[clamp(24px,2.6vw,40px)] hover:border-accent/55"
+    >
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 transition-opacity duration-300"
+        style={{
+          opacity: "var(--tilt-active, 0)",
+          background:
+            "radial-gradient(420px circle at var(--tilt-x, 50%) var(--tilt-y, 50%)," +
+            " color-mix(in oklab, var(--accent) 16%, transparent), transparent 62%)",
+        }}
+      />
+
+      <div className="relative flex items-start justify-between gap-4">
+        <span className="font-mono text-[11px] tracking-[0.16em] text-accent">
+          {String(index + 1).padStart(2, "0")}
+          <span className="text-fg-faint"> / {total}</span>
+        </span>
+        <span className="text-right font-mono text-[10px] tracking-[0.14em] text-fg-subtle uppercase">
+          {t(project.categoryKey)}
+        </span>
+      </div>
+
+      <div className="relative aspect-[16/10] w-full overflow-hidden border border-hairline bg-surface">
+        {shots.length > 0 ? (
+          <button
+            type="button"
+            onClick={() => setOpenAt(0)}
+            aria-label={t("projects.gallery.open", { name: project.name, count: shots.length })}
+            className="group/shot absolute inset-0 block cursor-pointer"
+          >
+            <Image
+              src={shots[0].src}
+              alt={t("projects.shot.alt", { name: project.name })}
+              fill
+              sizes="(min-width: 1024px) 45vw, 90vw"
+              className="object-cover object-top transition-transform duration-700 ease-[cubic-bezier(.16,1,.3,1)] group-hover/card:scale-[1.04]"
+            />
+            {/* Vela la captura hacia la paleta oscura para que no chille entre las tarjetas. */}
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute inset-0 bg-bg/35 mix-blend-multiply transition-opacity duration-500 group-hover/card:opacity-0"
+            />
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute inset-0"
+              style={{
+                background:
+                  "linear-gradient(180deg, transparent 45%, color-mix(in oklab, var(--bg) 78%, transparent) 100%)",
+              }}
+            />
+            <span
+              aria-hidden="true"
+              className="absolute right-3 bottom-3 inline-flex items-center gap-1.5 rounded-full border border-hairline bg-bg/85 px-2.5 py-1 font-mono text-[10px] tracking-[0.1em] text-fg-muted backdrop-blur-sm transition-colors group-hover/shot:border-accent group-hover/shot:text-accent"
+            >
+              <svg viewBox="0 0 16 16" className="size-3" fill="none" stroke="currentColor" strokeWidth="1.5">
+                <rect x="2" y="3" width="9" height="7" rx="1" />
+                <path d="M5 13h9V6" />
+              </svg>
+              1 / {shots.length}
+            </span>
+          </button>
+        ) : (
+          <div aria-hidden="true" className="absolute inset-0">
+            <div
+              className="absolute inset-0"
+              style={{
+                background:
+                  "radial-gradient(120% 130% at 18% 0%, color-mix(in oklab, var(--accent) 26%, transparent) 0%, transparent 58%)," +
+                  "linear-gradient(140deg, var(--surface) 0%, var(--bg) 78%)",
+              }}
+            />
+            <div
+              className="absolute inset-0"
+              style={{
+                backgroundImage:
+                  "repeating-linear-gradient(90deg, var(--hairline-soft) 0 1px, transparent 1px 44px)," +
+                  "repeating-linear-gradient(0deg, var(--hairline-soft) 0 1px, transparent 1px 44px)",
+              }}
+            />
+            <span className="absolute inset-0 grid place-items-center font-display text-[clamp(46px,7vw,84px)] leading-none font-bold tracking-[-0.05em] text-fg/10">
+              {project.initials}
+            </span>
           </div>
-        </BlurFade>
+        )}
+      </div>
 
-        <div className="space-y-16">
-          {projects.map((project, index) => (
-            <BlurFade key={project.title} delay={0.3 + index * 0.2}>
-              <motion.div
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.7, delay: index * 0.1 }}
-                viewport={{ once: true }}
-                className={`${
-                  project.featured ? "col-span-full" : "col-span-1"
-                }`}
-              >
-                <Card
-                  className={`overflow-hidden hover:shadow-2xl transition-all duration-500 group ${
-                    project.featured
-                      ? "border-primary/20 bg-gradient-to-br from-primary/5 to-transparent"
-                      : ""
-                  }`}
-                >
-                  <div
-                    className={`${
-                      project.featured ? "lg:flex lg:items-center" : ""
-                    }`}
-                  >
-                    {/* Project Visual - Tech Stack Showcase */}
-                    <div
-                      className={`${
-                        project.featured ? "lg:w-1/2" : "w-full"
-                      } relative`}
-                    >
-                      <div className="aspect-video bg-gradient-to-br from-card to-card/50 border border-border/50 flex items-center justify-center relative overflow-hidden group/visual">
-                        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-secondary/5" />
+      <div className="relative flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+        <h3 className="font-display text-[clamp(24px,2.6vw,34px)] leading-[1.02] font-bold tracking-[-0.03em] text-fg">
+          {project.name}
+        </h3>
+        {project.url ? (
+          <a
+            href={project.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group/link inline-flex items-center gap-1.5 font-mono text-[11px] tracking-[0.08em] text-fg-subtle transition-colors hover:text-accent"
+          >
+            {project.host}
+            <span
+              aria-hidden="true"
+              className="transition-transform duration-300 group-hover/link:translate-x-[2px] group-hover/link:-translate-y-[2px]"
+            >
+              ↗
+            </span>
+            <span className="sr-only">{t("projects.visit.sr", { name: project.name })}</span>
+          </a>
+        ) : null}
+      </div>
 
-                        {/* Tech Stack Visual */}
-                        <div className="relative z-10 w-full h-full p-6 flex flex-col justify-center">
-                          <div className="text-center mb-4">
-                            <div className="w-16 h-16 mx-auto mb-3 rounded-full bg-gradient-to-r from-primary/20 to-secondary/20 flex items-center justify-center">
-                              <Eye className="w-8 h-8 text-primary" />
-                            </div>
-                            <p className="text-primary font-semibold text-sm">
-                              {t("projects.tech.label")}
-                            </p>
-                          </div>
+      <p className="relative flex-1 text-[15px] leading-[1.65] text-pretty text-fg-muted">
+        {t(project.summaryKey)}
+      </p>
 
-                          {/* Tech Grid */}
-                          <div className="grid grid-cols-3 gap-2 max-w-xs mx-auto">
-                            {project.tech.slice(0, 6).map((tech, techIndex) => (
-                              <motion.div
-                                key={tech}
-                                initial={{ opacity: 0, scale: 0.8 }}
-                                whileInView={{ opacity: 1, scale: 1 }}
-                                transition={{ delay: techIndex * 0.1 }}
-                                viewport={{ once: true }}
-                                className="aspect-square bg-gradient-to-br from-background/80 to-background/40 backdrop-blur-sm border border-border/30 rounded-lg flex items-center justify-center group/tech hover:border-primary/50 transition-all duration-300"
-                              >
-                                <span className="text-xs font-medium text-center leading-tight group-hover/tech:text-primary transition-colors">
-                                  {tech}
-                                </span>
-                              </motion.div>
-                            ))}
-                          </div>
+      <ul className="relative flex flex-wrap gap-[7px]">
+        {project.tech.map((item) => (
+          <li
+            key={item}
+            className="rounded-full border border-border px-[10px] py-[5px] font-mono text-[10px] tracking-[0.08em] text-fg-subtle"
+          >
+            {item}
+          </li>
+        ))}
+      </ul>
 
-                          {project.tech.length > 6 && (
-                            <div className="text-center mt-3">
-                              <span className="text-xs text-muted-foreground bg-background/50 px-2 py-1 rounded-full">
-                                +{project.tech.length - 6} más
-                              </span>
-                            </div>
-                          )}
-                        </div>
+      <div className="relative flex items-baseline gap-3 border-t border-hairline pt-[18px]">
+        <span className="font-display text-[30px] leading-none font-bold text-accent">
+          {project.metric.value}
+        </span>
+        <span className="font-mono text-[10px] tracking-[0.14em] text-fg-subtle uppercase">
+          {t(project.metric.labelKey)}
+        </span>
+      </div>
 
-                        {project.featured && (
-                          <div className="absolute top-4 left-4">
-                            <span className="px-3 py-1 bg-primary text-primary-foreground text-xs font-semibold rounded-full shadow-lg">
-                              {t("projects.featured.badge")}
-                            </span>
-                          </div>
-                        )}
+      {shots.length > 0 ? (
+        <Lightbox
+          images={shots}
+          openAt={openAt}
+          onClose={() => setOpenAt(null)}
+          title={project.name}
+        />
+      ) : null}
+    </article>
+  );
+}
 
-                        <div className="absolute top-4 right-4">
-                          <span
-                            className={`px-3 py-1 text-xs font-semibold rounded-full shadow-lg ${
-                              project.status === "En producción"
-                                ? "bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300"
-                                : project.status === "En desarrollo"
-                                ? "bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-300"
-                                : "bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300"
-                            }`}
-                          >
-                            {project.status}
-                          </span>
-                        </div>
-                      </div>
-                    </div>
+export function ProjectsSection() {
+  const { t } = useTranslation();
 
-                    {/* Project Content */}
-                    <CardContent
-                      className={`${project.featured ? "lg:w-1/2 p-8" : "p-6"}`}
-                    >
-                      <div className="flex items-center justify-between mb-3">
-                        <span className="text-sm font-medium text-primary bg-primary/10 px-3 py-1 rounded-full">
-                          {project.category}
-                        </span>
-                        <span className="text-sm text-muted-foreground">
-                          {project.timeline}
-                        </span>
-                      </div>
-
-                      <h3
-                        className={`font-bold mb-4 group-hover:text-primary transition-colors ${
-                          project.featured ? "text-2xl" : "text-xl"
-                        }`}
-                      >
-                        {project.title}
-                      </h3>
-
-                      <p className="text-muted-foreground mb-4 leading-relaxed">
-                        {project.featured
-                          ? project.longDescription
-                          : project.description}
-                      </p>
-
-                      {/* Tech Stack */}
-                      <div className="flex flex-wrap gap-2 mb-6">
-                        {project.tech.map((tech) => (
-                          <span
-                            key={tech}
-                            className="px-2 py-1 bg-secondary text-secondary-foreground text-xs rounded-md font-medium"
-                          >
-                            {tech}
-                          </span>
-                        ))}
-                      </div>
-
-                      {/* Action Buttons */}
-                      <div className="flex gap-3">
-                        <Button asChild size="sm" className="group/btn">
-                          <a
-                            href={project.github}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                          >
-                            <Github className="w-4 h-4 mr-2 group-hover/btn:rotate-12 transition-transform" />
-                            {t("projects.btn.code")}
-                          </a>
-                        </Button>
-
-                        {project.demo && (
-                          <Button
-                            asChild
-                            variant="outline"
-                            size="sm"
-                            className="group/btn"
-                          >
-                            <a
-                              href={project.demo}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                            >
-                              <ExternalLink className="w-4 h-4 mr-2 group-hover/btn:rotate-12 transition-transform" />
-                              Demo
-                            </a>
-                          </Button>
-                        )}
-                      </div>
-                    </CardContent>
-                  </div>
-                </Card>
-              </motion.div>
+  return (
+    <section id="proyectos" className="relative border-t border-hairline-soft bg-surface">
+      <div className="px-[5vw] pt-[clamp(70px,10vw,130px)] pb-[clamp(90px,13vw,170px)]">
+        <div className="mx-auto max-w-[1400px]">
+          <div className="mb-[clamp(40px,6vw,76px)] flex flex-wrap items-end justify-between gap-6">
+            <BlurFade delay={0.05}>
+              <p className="mb-[22px] font-mono text-[11px] tracking-[0.26em] text-accent uppercase">
+                {t("projects.eyebrow")}
+              </p>
+              <h2 className="font-display text-[clamp(30px,5.4vw,74px)] leading-[0.98] font-bold tracking-[-0.04em] text-balance text-fg">
+                {t("projects.heading")}
+              </h2>
             </BlurFade>
-          ))}
-        </div>
-
-        {/* CTA Section */}
-        <BlurFade delay={0.8}>
-          <div className="mt-16 text-center">
-            <Card className="max-w-2xl mx-auto">
-              <CardContent className="p-8">
-                <h3 className="text-2xl font-bold mb-4">
-                  <GradientText>{t("projects.cta.title")}</GradientText>
-                </h3>
-                <p className="text-muted-foreground mb-6">
-                  {t("projects.cta.desc")}
-                </p>
-                <Button
-                  onClick={() => {
-                    const element = document.getElementById("contact");
-                    element?.scrollIntoView({ behavior: "smooth" });
-                  }}
-                  size="lg"
-                >
-                  {t("projects.cta.button")}
-                </Button>
-              </CardContent>
-            </Card>
+            <BlurFade delay={0.12}>
+              <p className="max-w-[26ch] font-mono text-[11px] leading-[1.7] tracking-[0.1em] text-fg-subtle">
+                {t("projects.note")}
+              </p>
+            </BlurFade>
           </div>
-        </BlurFade>
+
+          {/* Cuatro tarjetas: 2×2 llena la retícula. Con 3 columnas la última quedaría huérfana. */}
+          <div className="grid grid-cols-1 gap-[clamp(16px,2vw,28px)] md:grid-cols-2">
+            {projects.map((project, index) => (
+              <BlurFade
+                key={project.id}
+                delay={0.08 + index * 0.06}
+                className="h-full [perspective:1200px]"
+              >
+                <ProjectCard project={project} index={index} />
+              </BlurFade>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <div className="border-t border-hairline-soft bg-bg px-[5vw] py-[clamp(100px,16vw,220px)]">
+        <div className="mx-auto max-w-[1080px]">
+          <BlurFade delay={0.05}>
+            <p className="mb-[34px] font-mono text-[11px] tracking-[0.26em] text-accent uppercase">
+              {t("projects.manifesto.eyebrow")}
+            </p>
+          </BlurFade>
+
+          <div className="flex flex-col gap-[clamp(20px,2.6vw,34px)]">
+            {manifesto.map((idea, index) => (
+              <BlurFade key={idea.id} delay={0.12 + index * 0.08}>
+                <p className="font-display text-[clamp(22px,3.4vw,46px)] leading-[1.24] font-bold tracking-[-0.03em] text-pretty text-fg-subtle">
+                  <span className="text-fg">{t(idea.titleKey)}</span>{" "}
+                  {t(idea.descKey)}
+                </p>
+              </BlurFade>
+            ))}
+          </div>
+        </div>
       </div>
     </section>
   );
 }
+
+export default ProjectsSection;

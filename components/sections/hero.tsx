@@ -1,365 +1,265 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { ChevronDown, Github, Linkedin, Mail, Phone } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import BlurFade from "@/components/ui/blur-fade";
-import { AnimatedGradientText } from "@/components/ui/animated-gradient-text";
-import { TypingAnimation } from "@/components/ui/typing-animation";
-import { Particles } from "@/components/ui/particles";
 import Image from "next/image";
 import { useTranslation } from "react-i18next";
-import { useScrollReveal, scrollAnimations } from "@/hooks/use-scroll-reveal";
+import Marquee from "@/components/ui/marquee";
+import { useMagnet } from "@/hooks/use-magnet";
+import { useParallax } from "@/hooks/use-parallax";
+import { useTilt } from "@/hooks/use-tilt";
 
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      delayChildren: 0.3,
-      staggerChildren: 0.2,
-    },
-  },
-};
+/** Nombres propios de tecnología: no se traducen. */
+const TECHNOLOGIES = [
+  "TypeScript",
+  "NestJS",
+  "Next.js",
+  "Angular",
+  "PostgreSQL",
+  "Docker",
+  "Nx",
+  "GraphQL",
+];
 
-const itemVariants = {
-  hidden: { y: 20, opacity: 0 },
-  visible: {
-    y: 0,
-    opacity: 1,
-    transition: {
-      duration: 0.5,
-    },
-  },
-};
+/** Retícula de fondo del diseño, desvanecida hacia los bordes. */
+const GRID_BACKDROP = {
+  backgroundImage:
+    "linear-gradient(rgba(255,255,255,.045) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.045) 1px, transparent 1px)",
+  backgroundSize: "90px 90px",
+  maskImage:
+    "radial-gradient(ellipse 90% 70% at 50% 40%, #000 20%, transparent 78%)",
+  WebkitMaskImage:
+    "radial-gradient(ellipse 90% 70% at 50% 40%, #000 20%, transparent 78%)",
+} as const;
 
 export function HeroSection() {
   const { t } = useTranslation();
-  const scrollToSection = (sectionId: string) => {
-    const element = document.getElementById(sectionId);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
-    }
-  };
 
-  // Spectacular scroll animations
-  const greetingRef = useScrollReveal({
-    targets: ".hero-greeting",
-    animation: scrollAnimations.fadeInUp,
-    triggerOffset: 0.5,
-  });
-
-  const nameRef = useScrollReveal({
-    targets: ".hero-name",
-    animation: scrollAnimations.complexEntrance,
-    triggerOffset: 0.4,
-    delay: 200,
-  });
-
-  const titleRef = useScrollReveal({
-    targets: ".hero-title",
-    animation: scrollAnimations.elasticSlide,
-    triggerOffset: 0.3,
-    delay: 400,
-  });
-
-  const descriptionRef = useScrollReveal({
-    targets: ".hero-description",
-    animation: scrollAnimations.waveIn,
-    triggerOffset: 0.3,
-    delay: 600,
-  });
-
-  const techStackRef = useScrollReveal({
-    targets: ".hero-tech-stack span",
-    animation: scrollAnimations.staggerScale,
-    triggerOffset: 0.2,
-    delay: 800,
-  });
-
-  const buttonsRef = useScrollReveal({
-    targets: ".hero-buttons",
-    animation: scrollAnimations.springRebound,
-    triggerOffset: 0.2,
-    delay: 1000,
-  });
-
-  const socialRef = useScrollReveal({
-    targets: ".hero-social",
-    animation: scrollAnimations.flipIn,
-    triggerOffset: 0.2,
-    delay: 1200,
-  });
+  const accentBlobRef = useParallax<HTMLDivElement>({ speed: 0.22 });
+  const violetBlobRef = useParallax<HTMLDivElement>({ speed: -0.16 });
+  const wordmarkRef = useParallax<HTMLDivElement>({ speed: 0.5 });
+  const photoRef = useParallax<HTMLDivElement>({ speed: 0.1 });
+  const photoTiltRef = useTilt<HTMLDivElement>({ maxTilt: 7, lift: 10 });
+  const projectsRef = useMagnet<HTMLAnchorElement>();
+  const cvRef = useMagnet<HTMLAnchorElement>();
 
   return (
-    <section
-      id="hero"
-      className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-background via-background to-muted/20"
-    >
-      <Particles
-        className="absolute inset-0 text-muted-foreground/20"
-        quantity={100}
-      />
+    <>
+      <section
+        id="inicio"
+        className="relative flex min-h-[100svh] flex-col justify-center overflow-hidden px-[5vw] pt-[120px] pb-[60px] lg:pt-[96px] lg:pb-12"
+      >
+        {/* Capas decorativas */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 opacity-50"
+          style={GRID_BACKDROP}
+        />
 
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-          className="max-w-6xl mx-auto"
+        <div
+          ref={accentBlobRef}
+          aria-hidden="true"
+          className="pointer-events-none absolute top-[8%] -right-[8vw] h-[46vw] max-h-[620px] w-[46vw] max-w-[620px] rounded-full blur-[30px]"
+          style={{
+            background:
+              "radial-gradient(circle at 35% 35%, color-mix(in srgb, var(--accent) 50%, transparent), transparent 62%)",
+          }}
         >
-          {/* Main Content Layout */}
-          <div className="flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-16">
-            {/* Text Content */}
-            <motion.div
-              variants={itemVariants}
-              className="flex-1 text-center lg:text-left space-y-6"
+          <div className="size-full animate-floaty" />
+        </div>
+
+        <div
+          ref={violetBlobRef}
+          aria-hidden="true"
+          className="pointer-events-none absolute -bottom-[6%] -left-[10vw] h-[40vw] max-h-[520px] w-[40vw] max-w-[520px] rounded-full blur-[40px]"
+          style={{
+            background:
+              "radial-gradient(circle, rgba(120,105,255,.28), rgba(120,105,255,0) 65%)",
+          }}
+        />
+
+        <div
+          ref={wordmarkRef}
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 flex items-center justify-center"
+        >
+          <span
+            className="font-display text-[clamp(90px,26vw,420px)] leading-[0.8] font-bold tracking-[-0.04em] whitespace-nowrap text-transparent"
+            style={{ WebkitTextStroke: "1px rgba(255,255,255,.055)" }}
+          >
+            FULLSTACK
+          </span>
+        </div>
+
+        {/* Contenido */}
+        <div className="relative z-[3] mx-auto grid w-full max-w-[1400px] items-end gap-11 lg:grid-cols-[minmax(0,1fr)_auto]">
+          <div className="min-w-0">
+            <div
+              className="mb-5 flex animate-fade-up flex-wrap items-center gap-3"
+              style={{ animationDelay: "0.1s", animationDuration: "0.8s" }}
             >
-              {/* Greeting */}
-              <div ref={greetingRef} className="hero-greeting">
-                <BlurFade delay={0.4}>
-                  <motion.p
-                    variants={itemVariants}
-                    className="text-lg sm:text-xl text-muted-foreground"
-                  >
-                    {t("hero.greeting")}
-                  </motion.p>
-                </BlurFade>
-              </div>
+              <span className="font-mono text-[11px] tracking-[0.24em] text-accent uppercase">
+                {t("hero.eyebrow")}
+              </span>
+              <span className="inline-flex items-center gap-2.5 rounded-full border border-hairline px-3.5 py-1.5">
+                <span
+                  aria-hidden="true"
+                  className="size-[7px] animate-pulse-dot rounded-full bg-accent"
+                />
+                <span className="font-mono text-[11px] tracking-[0.18em] text-fg-subtle uppercase">
+                  {t("hero.availability")}
+                </span>
+              </span>
+            </div>
 
-              {/* Name */}
-              <div ref={nameRef} className="hero-name">
-                <BlurFade delay={0.6}>
-                  <motion.h1
-                    variants={itemVariants}
-                    className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold leading-tight"
-                  >
-                    <AnimatedGradientText
-                      gradient="from-blue-500 via-purple-500 to-pink-500"
-                      duration={4}
-                    >
-                      {t("hero.name")}
-                    </AnimatedGradientText>
-                  </motion.h1>
-                </BlurFade>
-              </div>
+            <h1 className="m-0 font-display text-[clamp(42px,8.8vw,142px)] leading-[0.86] font-bold tracking-[-0.045em] text-fg">
+              <span className="block overflow-hidden pb-[0.04em]">
+                <span
+                  className="inline-block animate-rise-in"
+                  style={{ animationDelay: "0.15s" }}
+                >
+                  MARIO EDUARDO
+                </span>
+              </span>
+              <span className="block overflow-hidden pb-[0.04em]">
+                <span
+                  className="inline-block animate-rise-in"
+                  style={{ animationDelay: "0.28s" }}
+                >
+                  SÁNCHEZ
+                </span>
+              </span>
+              <span className="block overflow-hidden pb-[0.04em]">
+                <span
+                  className="inline-block animate-rise-in text-transparent"
+                  style={{
+                    animationDelay: "0.41s",
+                    WebkitTextStroke: "1.6px var(--accent)",
+                  }}
+                >
+                  MEJÍA
+                </span>
+              </span>
+            </h1>
 
-              {/* Title with Typing Animation */}
-              <div ref={titleRef} className="hero-title">
-                <BlurFade delay={0.8}>
-                  <motion.div variants={itemVariants} className="space-y-3">
-                    <div className="text-xl sm:text-2xl lg:text-3xl font-semibold h-12 flex items-center">
-                      <TypingAnimation
-                        texts={[
-                          t("hero.title"),
-                          "Frontend Developer",
-                          "Backend Developer",
-                          "Full Stack Engineer"
-                        ]}
-                        className="text-foreground"
-                        cursorClassName="text-primary"
-                        duration={100}
-                        delay={2000}
-                      />
-                    </div>
-                    <div className="h-1 w-24 bg-gradient-to-r from-primary via-secondary to-accent mx-auto lg:mx-0 rounded-full"></div>
-                  </motion.div>
-                </BlurFade>
-              </div>
+            <div
+              className="mt-6 flex animate-fade-up flex-wrap gap-x-5 gap-y-2.5"
+              style={{ animationDelay: "0.55s" }}
+            >
+              <span className="font-mono text-[clamp(12px,1.5vw,15px)] tracking-[0.1em] text-fg uppercase">
+                {t("hero.role")}
+              </span>
+              <span className="font-mono text-[clamp(12px,1.5vw,15px)] tracking-[0.1em] text-accent uppercase">
+                {t("hero.roleAccent")}
+              </span>
+            </div>
 
-              {/* Description */}
-              <div ref={descriptionRef} className="hero-description">
-                <BlurFade delay={1.0}>
-                  <motion.p
-                    variants={itemVariants}
-                    className="text-base sm:text-lg lg:text-xl text-muted-foreground max-w-2xl leading-relaxed"
-                  >
-                    {t("hero.description")}
-                  </motion.p>
-                </BlurFade>
-              </div>
+            <p
+              className="mt-5 max-w-[56ch] animate-fade-up text-[clamp(15px,1.9vw,19px)] leading-[1.65] text-pretty text-fg-muted"
+              style={{ animationDelay: "0.68s" }}
+            >
+              {t("hero.intro")}
+            </p>
 
-              {/* Tech Stack Preview */}
-              <div ref={techStackRef} className="hero-tech-stack">
-                <BlurFade delay={1.2}>
-                  <motion.div
-                    variants={itemVariants}
-                    className="flex flex-wrap justify-center lg:justify-start gap-2 py-4"
-                  >
-                    {[
-                      "Java",
-                      "Spring Boot",
-                      "SQL",
-                      "Next.js",
-                      "Angular",
-                      "Docker",
-                    ].map((tech, index) => (
-                      <motion.span
-                        key={tech}
-                        custom={index}
-                        initial="hidden"
-                        animate="visible"
-                        variants={itemVariants}
-                        whileHover={{ scale: 1.1 }}
-                        className="px-3 py-1 bg-primary/10 text-primary rounded-full text-sm font-medium hover:bg-primary/20 transition-colors cursor-pointer"
-                      >
-                        {tech}
-                      </motion.span>
-                    ))}
-                  </motion.div>
-                </BlurFade>
-              </div>
-
-              {/* CTA Buttons */}
-              <div ref={buttonsRef} className="hero-buttons">
-                <BlurFade delay={1.4}>
-                  <motion.div
-                    variants={itemVariants}
-                    className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start"
-                  >
-                    <Button
-                      size="lg"
-                      onClick={() => scrollToSection("projects")}
-                      className="group relative overflow-hidden"
-                    >
-                      <motion.span
-                        whileHover={{ scale: 1.05 }}
-                        className="relative z-10"
-                      >
-                        {t("hero.cta.primary")}
-                      </motion.span>
-                    </Button>
-                    <Button
-                      variant="outline"
-                      size="lg"
-                      onClick={() => scrollToSection("contact")}
-                      className="group"
-                    >
-                      <Mail className="w-4 h-4 mr-2" />
-                      <motion.span whileHover={{ scale: 1.05 }}>
-                        {t("hero.cta.secondary")}
-                      </motion.span>
-                    </Button>
-                  </motion.div>
-                </BlurFade>
-              </div>
-
-              {/* Social Links */}
-              <div ref={socialRef} className="hero-social">
-                <BlurFade delay={1.6}>
-                  <motion.div
-                    variants={itemVariants}
-                    className="flex justify-center lg:justify-start space-x-4 pt-6"
-                  >
-                    <motion.a
-                      href="https://github.com/Mario-S-M"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      whileHover={{ scale: 1.1, y: -2 }}
-                      whileTap={{ scale: 0.95 }}
-                      className="p-3 rounded-full bg-primary/10 text-primary hover:bg-primary hover:text-primary-foreground transition-all duration-300 shadow-lg hover:shadow-xl"
-                    >
-                      <Github className="w-5 h-5" />
-                    </motion.a>
-                    <motion.a
-                      href="https://www.linkedin.com/in/mario-eduardo-sánchez-mejía-137548184/"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      whileHover={{ scale: 1.1, y: -2 }}
-                      whileTap={{ scale: 0.95 }}
-                      className="p-3 rounded-full bg-primary/10 text-primary hover:bg-primary hover:text-primary-foreground transition-all duration-300 shadow-lg hover:shadow-xl"
-                    >
-                      <Linkedin className="w-5 h-5" />
-                    </motion.a>
-                    <motion.a
-                      href="mailto:mayitolalito@hotmail.com"
-                      whileHover={{ scale: 1.1, y: -2 }}
-                      whileTap={{ scale: 0.95 }}
-                      className="p-3 rounded-full bg-primary/10 text-primary hover:bg-primary hover:text-primary-foreground transition-all duration-300 shadow-lg hover:shadow-xl"
-                    >
-                      <Mail className="w-5 h-5" />
-                    </motion.a>
-                    <motion.a
-                      href="tel:44-38-40-91-87"
-                      whileHover={{ scale: 1.1, y: -2 }}
-                      whileTap={{ scale: 0.95 }}
-                      className="p-3 rounded-full bg-primary/10 text-primary hover:bg-primary hover:text-primary-foreground transition-all duration-300 shadow-lg hover:shadow-xl"
-                    >
-                      <Phone className="w-5 h-5" />
-                    </motion.a>
-                  </motion.div>
-                </BlurFade>
-              </div>
-            </motion.div>
-
-            {/* Profile Image */}
-            <motion.div variants={itemVariants} className="flex-shrink-0">
-              <BlurFade delay={0.2}>
-                <div className="relative group">
-                  {/* Background Glow Effect */}
-                  <div className="absolute -inset-4 bg-gradient-to-r from-primary/20 via-secondary/20 to-accent/20 rounded-full blur-2xl opacity-60 group-hover:opacity-80 transition-opacity duration-500"></div>
-
-                  {/* Main Image Container */}
-                  <motion.div
-                    whileHover={{ scale: 1.05, rotate: 1 }}
-                    transition={{
-                      duration: 0.3,
-                      type: "spring",
-                      stiffness: 300,
-                    }}
-                    className="relative w-48 h-48 sm:w-56 sm:h-56 lg:w-64 lg:h-64 xl:w-72 xl:h-72 mx-auto"
-                  >
-                    {/* Animated Border */}
-                    <div className="absolute inset-0 rounded-full bg-gradient-to-r from-primary via-secondary to-accent p-1 animate-spin-slow">
-                      <div className="w-full h-full rounded-full bg-background"></div>
-                    </div>
-
-                    {/* Image */}
-                    <div className="absolute inset-1 rounded-full overflow-hidden">
-                      <Image
-                        src="/Foto de Perfil.jpg"
-                        alt="Mario Eduardo Sánchez Mejía"
-                        fill
-                        className="object-cover group-hover:scale-110 transition-transform duration-700"
-                        priority
-                      />
-                      {/* Overlay Gradient */}
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                    </div>
-
-                    {/* Status Indicator */}
-                    <div className="absolute -bottom-1 -right-1 w-6 h-6 sm:w-8 sm:h-8 bg-green-500 rounded-full border-4 border-background shadow-lg animate-pulse">
-                      <div className="w-full h-full bg-green-400 rounded-full animate-ping"></div>
-                    </div>
-
-                    {/* Floating Elements */}
-                    <div className="absolute -top-2 -left-2 w-4 h-4 bg-primary/60 rounded-full animate-bounce delay-100"></div>
-                    <div className="absolute -bottom-2 -left-2 w-3 h-3 bg-secondary/60 rounded-full animate-bounce delay-300"></div>
-                    <div className="absolute -top-2 -right-2 w-3 h-3 bg-accent/60 rounded-full animate-bounce delay-500"></div>
-                  </motion.div>
-                </div>
-              </BlurFade>
-            </motion.div>
+            <div
+              className="mt-8 flex animate-fade-up flex-wrap gap-3.5"
+              style={{ animationDelay: "0.82s" }}
+            >
+              <a
+                ref={projectsRef}
+                href="#proyectos"
+                className="inline-flex items-center gap-3 rounded-full bg-accent px-[30px] py-[17px] text-sm font-extrabold tracking-[0.04em] text-bg uppercase hover:bg-accent-active hover:text-bg"
+                style={{
+                  boxShadow:
+                    "0 14px 44px color-mix(in srgb, var(--accent) 34%, transparent)",
+                }}
+              >
+                {t("hero.cta.projects")}
+                <span aria-hidden="true" className="text-[17px]">
+                  ↘
+                </span>
+              </a>
+              <a
+                ref={cvRef}
+                href="/cv-mario-sanchez.pdf"
+                download
+                className="inline-flex items-center gap-3 rounded-full border border-hairline px-[30px] py-[17px] text-sm font-extrabold tracking-[0.04em] text-fg uppercase hover:border-fg hover:bg-hairline-soft hover:text-fg"
+              >
+                {t("hero.cta.cv")}
+                <span aria-hidden="true" className="text-[17px]">
+                  ↓
+                </span>
+              </a>
+            </div>
           </div>
 
-        {/* Scroll Indicator */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 2 }}
-          className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
-        >
-          <motion.button
-            onClick={() => scrollToSection("about")}
-            animate={{ y: [0, 10, 0] }}
-            transition={{ duration: 2, repeat: Infinity }}
-            className="p-2 rounded-full bg-primary/10 text-primary hover:bg-primary hover:text-primary-foreground transition-colors"
+          {/* Retrato */}
+          <div
+            ref={photoRef}
+            className="relative w-[min(300px,62vw)] justify-self-start"
           >
-            <ChevronDown className="w-5 h-5" />
-          </motion.button>
-        </motion.div>
-        </motion.div>
-      </div>
-    </section>
+            <div ref={photoTiltRef} className="relative">
+              <div
+                aria-hidden="true"
+                className="pointer-events-none absolute -inset-3.5 rounded-[200px_200px_14px_14px] border border-accent/35"
+              />
+              <Image
+                src="/mario.jpg"
+                alt={t("hero.photo.alt")}
+                width={600}
+                height={800}
+                priority
+                className="block aspect-[3/4] w-full animate-fade-up rounded-[190px_190px_8px_8px] object-cover object-[50%_20%] grayscale contrast-[1.08]"
+                style={{ animationDelay: "0.5s", animationDuration: "1.1s" }}
+              />
+              <div
+                aria-hidden="true"
+                className="pointer-events-none absolute inset-0 rounded-[190px_190px_8px_8px] mix-blend-multiply"
+                style={{
+                  background:
+                    "linear-gradient(180deg, color-mix(in srgb, var(--accent) 10%, transparent), color-mix(in srgb, var(--bg) 72%, transparent))",
+                }}
+              />
+            </div>
+
+            <div className="absolute -right-4 -bottom-4 rounded-lg border border-hairline bg-bg px-3.5 py-2.5">
+              <span className="font-mono text-[10px] tracking-[0.14em] text-fg-subtle uppercase">
+                {t("hero.location")}
+              </span>
+            </div>
+          </div>
+        </div>
+
+        {/* Indicador de scroll */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute bottom-[26px] left-[5vw] z-[3] flex items-center gap-3.5"
+        >
+          <span className="block h-[52px] w-px overflow-hidden bg-hairline">
+            <span className="block size-full animate-scroll-cue bg-accent" />
+          </span>
+          <span className="font-mono text-[10px] tracking-[0.3em] text-fg-faint uppercase">
+            {t("hero.scroll")}
+          </span>
+        </div>
+      </section>
+
+      <section
+        aria-label={t("hero.marquee.aria")}
+        className="relative z-[4] border-y border-hairline bg-surface py-[22px]"
+      >
+        <Marquee
+          duration={34}
+          gap={40}
+          trackClassName="font-display text-[clamp(20px,3.4vw,40px)] font-medium tracking-[-0.02em] text-border"
+          separator={
+            <span aria-hidden="true" className="text-accent">
+              ✳
+            </span>
+          }
+          items={TECHNOLOGIES.map((name) => (
+            <span key={name}>{name}</span>
+          ))}
+        />
+      </section>
+    </>
   );
 }

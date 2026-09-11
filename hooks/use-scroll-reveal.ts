@@ -1,9 +1,13 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import type { AnimeParams } from "animejs";
 
 // Dynamic import for animejs to avoid SSR issues
-let anime: any = null;
+let anime: typeof import("animejs") | null = null;
+
+/** Lectura diferida: evita que el analisis de flujo la estreche a null en el modulo. */
+const getAnime = () => anime;
 
 const loadAnime = async () => {
   if (typeof window !== 'undefined' && !anime) {
@@ -18,7 +22,7 @@ const loadAnime = async () => {
 
 interface ScrollRevealOptions {
   targets: string | HTMLElement | NodeListOf<Element>;
-  animation: any;
+  animation: Omit<AnimeParams, "targets">;
   triggerOffset?: number;
   once?: boolean;
   delay?: number;
@@ -40,6 +44,8 @@ export function useScrollReveal({
 
   useEffect(() => {
     if (!isLoaded || !anime) return;
+    // Se captura aqui: dentro de los closures TypeScript pierde el estrechamiento.
+    const lib = anime;
 
     const element = elementRef.current;
     if (!element) return;
@@ -50,7 +56,7 @@ export function useScrollReveal({
           if (entry.isIntersecting) {
             // Add delay before starting animation
             setTimeout(() => {
-              anime({
+              lib({
                 targets: targets,
                 ...animation,
               });
@@ -78,6 +84,9 @@ export function useScrollReveal({
 }
 
 // Spectacular animations inspired by animejs.com documentation
+// Nota: este catalogo se evalua al cargar el modulo, antes de que `loadAnime`
+// resuelva la libreria, por lo que `stagger` y `setDashoffset` caen siempre en
+// su valor de respaldo. Comportamiento preexistente; se documenta, no se altera.
 export const scrollAnimations = {
   // Basic animations
   fadeInUp: {
@@ -173,7 +182,7 @@ export const scrollAnimations = {
   staggerFadeIn: {
     opacity: [0, 1],
     translateY: [30, 0],
-    delay: anime?.stagger(100) || 0,
+    delay: getAnime()?.stagger(100) || 0,
     duration: 600,
     easing: 'easeOutCubic',
   },
@@ -181,7 +190,7 @@ export const scrollAnimations = {
   staggerScale: {
     scale: [0.8, 1],
     opacity: [0, 1],
-    delay: anime?.stagger(150) || 0,
+    delay: getAnime()?.stagger(150) || 0,
     duration: 800,
     easing: 'easeOutBack',
   },
@@ -199,7 +208,7 @@ export const scrollAnimations = {
   typewriter: {
     opacity: [0, 1],
     duration: 50,
-    delay: anime?.stagger(50) || 0,
+    delay: getAnime()?.stagger(50) || 0,
     easing: 'easeInOutQuad',
   },
 
@@ -223,7 +232,7 @@ export const scrollAnimations = {
 
   // Path animations (SVG)
   pathDrawing: {
-    strokeDashoffset: [anime?.setDashoffset, 0],
+    strokeDashoffset: [getAnime()?.setDashoffset, 0],
     duration: 2000,
     easing: 'easeInOutSine',
   },
@@ -257,7 +266,7 @@ export const scrollAnimations = {
   waveIn: {
     opacity: [0, 1],
     translateY: [20, 0],
-    delay: anime?.stagger(100, {from: 'center'}) || 0,
+    delay: getAnime()?.stagger(100, {from: 'center'}) || 0,
     duration: 800,
     easing: 'easeOutCubic',
   },
