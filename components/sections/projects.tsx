@@ -48,6 +48,8 @@ const projects: Project[] = [
     host: "libreriashidalgo.mx",
     shots: [
       { src: "/projects/hidalgo/01-portada.jpg", captionKey: "projects.hidalgo.shot1" },
+      { src: "/projects/hidalgo/04-ficha-libro.jpg", captionKey: "projects.hidalgo.shot4" },
+      { src: "/projects/hidalgo/05-lealtad.jpg", captionKey: "projects.hidalgo.shot5" },
       { src: "/projects/hidalgo/02-catalogo.jpg", captionKey: "projects.hidalgo.shot2" },
       { src: "/projects/hidalgo/03-secciones.jpg", captionKey: "projects.hidalgo.shot3" },
     ],
@@ -73,6 +75,8 @@ const projects: Project[] = [
     url: "https://eskani.enesmorelia.unam.mx",
     host: "eskani.enesmorelia.unam.mx",
     shots: [
+      { src: "/projects/eskani/04-accesibilidad.jpg", captionKey: "projects.eskani.shot4" },
+      { src: "/projects/eskani/05-accesibilidad-avanzada.jpg", captionKey: "projects.eskani.shot5" },
       { src: "/projects/eskani/01-portada.jpg", captionKey: "projects.eskani.shot1" },
       { src: "/projects/eskani/02-panel-admin.jpg", captionKey: "projects.eskani.shot2" },
       { src: "/projects/eskani/03-contenidos.jpg", captionKey: "projects.eskani.shot3" },
@@ -91,6 +95,8 @@ const projects: Project[] = [
     shots: [
       { src: "/projects/bookitech/01-portada.jpg", captionKey: "projects.bookitech.shot1" },
       { src: "/projects/bookitech/02-asistente-pedido.jpg", captionKey: "projects.bookitech.shot2" },
+      { src: "/projects/bookitech/04-instituciones.jpg", captionKey: "projects.bookitech.shot4" },
+      { src: "/projects/bookitech/03-preguntas.jpg", captionKey: "projects.bookitech.shot3" },
     ],
     categoryKey: "projects.bookitech.category",
     summaryKey: "projects.bookitech.summary",
