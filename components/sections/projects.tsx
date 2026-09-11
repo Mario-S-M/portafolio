@@ -72,7 +72,11 @@ const projects: Project[] = [
     initials: "ES",
     url: "https://eskani.enesmorelia.unam.mx",
     host: "eskani.enesmorelia.unam.mx",
-    shots: [{ src: "/projects/eskani/01-portada.jpg", captionKey: "projects.eskani.shot1" }],
+    shots: [
+      { src: "/projects/eskani/01-portada.jpg", captionKey: "projects.eskani.shot1" },
+      { src: "/projects/eskani/02-panel-admin.jpg", captionKey: "projects.eskani.shot2" },
+      { src: "/projects/eskani/03-contenidos.jpg", captionKey: "projects.eskani.shot3" },
+    ],
     categoryKey: "projects.eskani.category",
     summaryKey: "projects.eskani.summary",
     tech: ["Next.js", "NestJS", "Fastify", "PostgreSQL", "Docker", "Nginx", "WCAG", "ARIA"],
@@ -84,7 +88,10 @@ const projects: Project[] = [
     initials: "BK",
     url: "https://bookitech.mx",
     host: "bookitech.mx",
-    shots: [{ src: "/projects/bookitech/01-portada.jpg", captionKey: "projects.bookitech.shot1" }],
+    shots: [
+      { src: "/projects/bookitech/01-portada.jpg", captionKey: "projects.bookitech.shot1" },
+      { src: "/projects/bookitech/02-asistente-pedido.jpg", captionKey: "projects.bookitech.shot2" },
+    ],
     categoryKey: "projects.bookitech.category",
     summaryKey: "projects.bookitech.summary",
     tech: [
